@@ -10,6 +10,13 @@ public class TestSceneScript : MonoBehaviour
     private bool playing = false;
     private int currentEmeraldCount = 0;
 
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -43,6 +50,8 @@ public class TestSceneScript : MonoBehaviour
 
     private void PickOnClick_OnClick(PickOnClick pickOnClick)
     {
+        audioSource.PlayOneShot(audioSource.clip);
+
         currentEmeraldCount--;
 
         pickOnClick.OnClick -= PickOnClick_OnClick;

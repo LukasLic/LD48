@@ -77,7 +77,7 @@ public class EmeraldEffects : MonoBehaviour
     IEnumerator Flash()
     {
         var steps = 24;
-        var flashTime = 0.34f; // Flash time in seconds.
+        var flashTime = 0.4f; // Flash time in seconds.
 
         // Light up
         for (int i = 1; i <= steps / 2; i++)
