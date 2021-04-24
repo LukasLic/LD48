@@ -1789,7 +1789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   maxSpeed: 10
-  jumpSpeed: 3
+  jumpSpeed: 6
   horizontalDrag: 200
   groundCheckPosition: {x: 0, y: -0.3}
   groundCheckRadius: 0.2
