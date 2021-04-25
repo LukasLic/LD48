@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiningController : MonoBehaviour
+public class MovableMiningController : MiningControllerBase
 {
     private TilesManager tilesManager;
     private (int x, int y) coordinates;
     public int numberOfDigsToMine;
-    public bool isDiggedOut;
 
     public BoxCollider2D leftCollider;
     public BoxCollider2D rightCollider;
@@ -33,7 +32,9 @@ public class MiningController : MonoBehaviour
     public GameObject top_right_down_tile;
     public GameObject top_right_left_down_tile;
 
-    public void Init(TilesManager tilesManager, (int x, int y) coordinates)
+    public override bool IsDiggedOut { get; set; }
+
+    public override void Init(TilesManager tilesManager, (int x, int y) coordinates)
     {
         this.tilesManager = tilesManager;
         this.coordinates = coordinates;
@@ -41,7 +42,7 @@ public class MiningController : MonoBehaviour
         transform.position = new Vector3(coordinates.x, coordinates.y, 0f);
     }
 
-    public void Mine(Collider2D collider)
+    public override void Mine(Collider2D collider)
     {
         var tileMiningController = GetTileMiningControllerNextToThisTile(collider);
         if(tileMiningController == null)
@@ -52,16 +53,16 @@ public class MiningController : MonoBehaviour
         tileMiningController.DigInto();
     }
 
-    public void UpdateState()
+    public override void UpdateState()
     {
         var leftNeighbor = tilesManager.GetTile(coordinates.x - 1, coordinates.y);
         var rightNeighbor = tilesManager.GetTile(coordinates.x + 1, coordinates.y);
         var topNeighbor = tilesManager.GetTile(coordinates.x, coordinates.y + 1);
         var downNeighbor = tilesManager.GetTile(coordinates.x, coordinates.y - 1);
-        var leftDiggetOut = leftNeighbor != null ? leftNeighbor.isDiggedOut : false;
-        var rightDiggedOut = rightNeighbor != null ? rightNeighbor.isDiggedOut : false;
-        var topDiggedOut = topNeighbor != null ? topNeighbor.isDiggedOut : false;
-        var downDiggedOut = downNeighbor != null ? downNeighbor.isDiggedOut : false;
+        var leftDiggetOut = leftNeighbor != null ? leftNeighbor.IsDiggedOut : false;
+        var rightDiggedOut = rightNeighbor != null ? rightNeighbor.IsDiggedOut : false;
+        var topDiggedOut = topNeighbor != null ? topNeighbor.IsDiggedOut : false;
+        var downDiggedOut = downNeighbor != null ? downNeighbor.IsDiggedOut : false;
 
         leftCollider.enabled = !leftDiggetOut;
         rightCollider.enabled = !rightDiggedOut;
@@ -158,7 +159,7 @@ public class MiningController : MonoBehaviour
     /// <summary>
     /// called on neighbour
     /// </summary>
-    private void DigInto()
+    public override void DigInto()
     {
         --numberOfDigsToMine;
         if(numberOfDigsToMine <= 0)
@@ -170,12 +171,12 @@ public class MiningController : MonoBehaviour
             }
 
             gameObject.SetActive(true);
-            isDiggedOut = true;
+            IsDiggedOut = true;
             tilesManager.UpdateTileWithNeighbors(coordinates.x, coordinates.y);
         }
     }
 
-    private MiningController GetTileMiningControllerNextToThisTile(Collider2D collider)
+    private MiningControllerBase GetTileMiningControllerNextToThisTile(Collider2D collider)
     {
         if (tilesManager == null)
         {
