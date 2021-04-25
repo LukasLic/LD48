@@ -163,9 +163,10 @@ Animation:
   m_GameObject: {fileID: 4145506816452472296}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 221510769b3009d4e8677602391b6f18, type: 2}
+  m_Animation: {fileID: 0}
   m_Animations:
   - {fileID: 7400000, guid: 221510769b3009d4e8677602391b6f18, type: 2}
+  - {fileID: 7400000, guid: d3b435ccfcd3aa14b9ea19d5f013d049, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -183,4 +184,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 1561537040}
+  increment: {fileID: 7400000, guid: 221510769b3009d4e8677602391b6f18, type: 2}
+  decrement: {fileID: 7400000, guid: d3b435ccfcd3aa14b9ea19d5f013d049, type: 2}
   text: {fileID: 4145506816438445500}
