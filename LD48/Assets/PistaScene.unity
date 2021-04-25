@@ -1651,6 +1651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   criticalPoint: {fileID: 730070537}
+  secondsToRemoveCriticalPoint: 5
 --- !u!1 &245740827
 GameObject:
   m_ObjectHideFlags: 0
