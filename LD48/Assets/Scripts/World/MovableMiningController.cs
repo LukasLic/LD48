@@ -32,6 +32,12 @@ public class MovableMiningController : MiningControllerBase
     public GameObject top_right_down_tile;
     public GameObject top_right_left_down_tile;
 
+    [Header("Corners")]
+    public BoxCollider2D corner_top_left;
+    public BoxCollider2D corner_top_right;
+    public BoxCollider2D corner_bottom_left;
+    public BoxCollider2D corner_bottom_right;
+
     public override bool IsDiggedOut { get; set; }
 
     public override void Init(TilesManager tilesManager, (int x, int y) coordinates)
@@ -44,13 +50,21 @@ public class MovableMiningController : MiningControllerBase
 
     public override void Mine(Collider2D collider, int numberOfDigs)
     {
-        var tileMiningController = GetTileMiningControllerNextToThisTile(collider);
-        if(tileMiningController == null)
+        //var tileMiningController = this as MiningControllerBase; //GetTileMiningControllerNextToThisTile(collider);
+        //if (tileMiningController == null)
+        //{
+        //    Debug.LogWarning("MininingComponent is null in method Mine");
+        //    return;
+        //}
+        var direction = GetMiningDirection(collider);
+
+        if(direction == null)
         {
-            Debug.LogWarning("MininingComponent is null in method Mine");
+            Debug.LogWarning("Direction is null in method Mine");
             return;
         }
-        tileMiningController.DigInto(numberOfDigs);
+
+        DigInto(numberOfDigs);
     }
 
     public override void UpdateState()
@@ -75,6 +89,7 @@ public class MovableMiningController : MiningControllerBase
         TryRemoveCriticalPoint(downDiggedOut, bottomCollider);
 
         SetAllTileTypesInactive();
+
         if (leftDiggetOut && rightDiggedOut && topDiggedOut && downDiggedOut)
         {
             none_tile.SetActive(true);
@@ -173,7 +188,7 @@ public class MovableMiningController : MiningControllerBase
     }
 
     /// <summary>
-    /// called on neighbour
+    /// Called on me
     /// </summary>
     public override void DigInto(int numberOfDigs)
     {
@@ -187,9 +202,9 @@ public class MovableMiningController : MiningControllerBase
                 return;
             }
 
-            gameObject.SetActive(true);
             IsDiggedOut = true;
-            tilesManager.UpdateTileWithNeighbors(coordinates.x, coordinates.y);
+            gameObject.SetActive(false);
+            tilesManager.UpdateTileAndNeighbors(coordinates.x, coordinates.y);
         }
     }
 
@@ -221,6 +236,37 @@ public class MovableMiningController : MiningControllerBase
             return tilesManager.GetOrAddNewTile(coordinates.x, coordinates.y - 1);
         }
         Debug.LogWarning("No known collider hit in method GetTileNextToThisTile");
+        return null;
+    }
+
+    private Direction? GetMiningDirection(Collider2D collider)
+    {
+        if (tilesManager == null)
+        {
+            Debug.LogWarning("TilesManager is null in method Mine");
+            return null;
+        }
+
+        if (collider == leftCollider)
+        {
+            return Direction.Left;
+        }
+
+        if (collider == rightCollider)
+        {
+            return Direction.Right;
+        }
+
+        if (collider == topCollider)
+        {
+            return Direction.Top;
+        }
+
+        if (collider == bottomCollider)
+        {
+            return Direction.Down;
+        }
+        Debug.LogWarning("No known collider hit in method GetMiningDirection");
         return null;
     }
 }

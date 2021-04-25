@@ -48,29 +48,31 @@ public class TilesManager : MonoBehaviour
         return AddNewTile(x, y);
     }
 
-    public void UpdateTileWithNeighbors(int x, int y)
+    public void UpdateTileAndNeighbors(int x, int y)
     {
         var tile = GetTile(x, y);
-        var leftNeighbor = GetTile(x - 1, y);
-        var rightNeighbor = GetTile(x + 1, y);
-        var topNeighbor = GetTile(x, y + 1);
-        var downNeighbor = GetTile(x, y - 1);
-        if (leftNeighbor != null)
+        var leftNeighbor = GetOrAddNewTile(x - 1, y);
+        var rightNeighbor = GetOrAddNewTile(x + 1, y);
+        var topNeighbor = GetOrAddNewTile(x, y + 1);
+        var downNeighbor = GetOrAddNewTile(x, y - 1);
+
+        if (leftNeighbor != null && !leftNeighbor.IsDiggedOut)
         {
             leftNeighbor.UpdateState();
         }
-        if(rightNeighbor != null)
+        if(rightNeighbor != null && !rightNeighbor.IsDiggedOut)
         {
             rightNeighbor.UpdateState();
         }
-        if (topNeighbor != null)
+        if (topNeighbor != null && !topNeighbor.IsDiggedOut)
         {
             topNeighbor.UpdateState();
         }
-        if (downNeighbor != null)
+        if (downNeighbor != null && !downNeighbor.IsDiggedOut)
         {
             downNeighbor.UpdateState();
         }
+
         tile.UpdateState();
     }
 
