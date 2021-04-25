@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DiggingController : MonoBehaviour
 {
+    public int digs;
+    public int criticalPointDigs;
+
     public float rayCastLenght;
     public LayerMask hitLayers;
 
@@ -33,7 +36,7 @@ public class DiggingController : MonoBehaviour
 
                 bool isCriticalPointHit = CriticalPointManager.Instance.IsCriticalPointHit(hit.collider, hit.point);
                 CriticalPointManager.Instance.SetCriticalPoint(hit.collider);
-                miningController.Mine(hit.collider, isCriticalPointHit ? 2 : 1);
+                miningController.Mine(hit.collider, isCriticalPointHit ? criticalPointDigs : digs);
             }
             else
             {

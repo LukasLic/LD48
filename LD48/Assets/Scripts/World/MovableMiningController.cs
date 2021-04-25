@@ -177,7 +177,6 @@ public class MovableMiningController : MiningControllerBase
     /// </summary>
     public override void DigInto(int numberOfDigs)
     {
-        Debug.Log(numberOfDigs);
         numberOfDigsToMine -= numberOfDigs;
         if(numberOfDigsToMine <= 0)
         {

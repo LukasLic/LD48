@@ -1516,6 +1516,7 @@ GameObject:
   - component: {fileID: 230796084}
   - component: {fileID: 230796085}
   - component: {fileID: 230796086}
+  - component: {fileID: 230796087}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -1572,6 +1573,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShopParentOverlay: {fileID: 1834179919}
+  playerStartPosition: {x: 0, y: 0, z: 0}
+  player: {fileID: 436929731}
   rewardPrefab: {fileID: 7921343889557705415, guid: 49e34a86cbc98964ea01f8ebb7d718de,
     type: 3}
   contractNotActiveText: {fileID: 900565973}
@@ -1585,7 +1588,7 @@ MonoBehaviour:
   contracts:
   - amount: 5
     gemType: 0
-    time: 120
+    time: 20
     title: C1
     description: This is description 1. \n Enjoy reading it. \n\n Your dear contractor.
     reward: 5
@@ -1652,6 +1655,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   criticalPoint: {fileID: 730070537}
   secondsToRemoveCriticalPoint: 5
+--- !u!114 &230796087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230796080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d8527010deb8e947ad321aa21e3e49d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfTeleports: 0
+  pickaxeLevel: 0
+  jetpackFuelLevel: 0
+  maxNumberOfTeleports: 5
+  maxPickaxeLevel: 4
+  maxJetpackFuelLevel: 5
+  teleportPrice: 10
+  pickaxeLevelPrice: 20
+  jetpackFuelLevelPrice: 30
+  player: {fileID: 436929729}
 --- !u!1 &245740827
 GameObject:
   m_ObjectHideFlags: 0
@@ -2560,6 +2585,7 @@ GameObject:
   - component: {fileID: 436929730}
   - component: {fileID: 436929734}
   - component: {fileID: 436929735}
+  - component: {fileID: 436929736}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2673,6 +2699,7 @@ MonoBehaviour:
     uiController: {fileID: 2078420567}
   - gemType: 2
     uiController: {fileID: 810967138}
+  currentCoins: 100
 --- !u!114 &436929735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2685,10 +2712,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11526082a133ec4b96a6e052897b39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  digs: 1
+  criticalPointDigs: 2
   rayCastLenght: 1.5
   hitLayers:
     serializedVersion: 2
     m_Bits: 3072
+--- !u!114 &436929736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436929729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f6706d3d4d0c96418e5dec750facdad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPosition: {x: 0, y: 0, z: 0}
+  numberOfAvailableTeleports: 0
 --- !u!1001 &438565129
 PrefabInstance:
   m_ObjectHideFlags: 0
