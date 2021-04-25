@@ -30,7 +30,10 @@ public class DiggingController : MonoBehaviour
                     Debug.LogWarning($"MiningController is null on {hit.collider.gameObject.name}");
                     return;
                 }
-                miningController.Mine(hit.collider);
+
+                bool isCriticalPointHit = CriticalPointManager.Instance.IsCriticalPointHit(hit.collider, hit.point);
+                CriticalPointManager.Instance.SetCriticalPoint(hit.collider);
+                miningController.Mine(hit.collider, isCriticalPointHit ? 2 : 1);
             }
             else
             {

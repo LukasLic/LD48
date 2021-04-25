@@ -10,7 +10,7 @@ public class NonMovableMiningController : MiningControllerBase
     {
     }
 
-    public override void Mine(Collider2D collider)
+    public override void Mine(Collider2D collider, int numberOfDigs)
     {
     }
 
@@ -18,7 +18,7 @@ public class NonMovableMiningController : MiningControllerBase
     {
     }
 
-    public override void DigInto()
+    public override void DigInto(int numberOfDigs)
     {
 
     }
