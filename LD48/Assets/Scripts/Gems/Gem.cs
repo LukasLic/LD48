@@ -30,7 +30,7 @@ public class Gem : MonoBehaviour
     public void Init(Vector2 popDirection)
     {
         this.invetory = GameObject.FindGameObjectWithTag("Player").GetComponent<InvetoryController>();
-
+        
         var popForce = minPopForce + Random.value * (maxPopForce - minPopForce);
         rb2D.AddForce(popForce * popDirection.normalized, ForceMode2D.Impulse);
         pickUpTimer = pickUpTime;

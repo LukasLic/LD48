@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : GenericSingleton<GameController>
@@ -8,6 +9,40 @@ public class GameController : GenericSingleton<GameController>
     public Transform[] ObjectsRoots;
 
     public RawImage OverlayScreen;
+
+    [Header("Test")]
+    public GameObject emeraldPrefab;
+    public GameObject saphirePrefab;
+    public GameObject crystalPrefab;
+
+    private void Update()
+    {
+        // TEST, REMOVE
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            var gem = Instantiate(emeraldPrefab, Vector3.zero, Quaternion.identity).GetComponent<Gem>();
+            gem.Init(new Vector2(.5f, .75f), InvetoryController.Instance);
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            var gem = Instantiate(saphirePrefab, Vector3.zero, Quaternion.identity).GetComponent<Gem>();
+            gem.Init(new Vector2(.5f, .75f), InvetoryController.Instance);
+        }
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            var gem = Instantiate(crystalPrefab, Vector3.zero, Quaternion.identity).GetComponent<Gem>();
+            gem.Init(new Vector2(.5f, .75f), InvetoryController.Instance);
+        }
+
+    }
+
+    /// <summary>
+    /// Restarts the whole Unity scene.
+    /// </summary>
+    public void CompleteRestart()
+    {
+        SceneManager.LoadScene(0);
+    }
 
     public void EndGame()
     {

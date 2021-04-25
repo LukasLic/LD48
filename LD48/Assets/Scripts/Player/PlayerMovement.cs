@@ -31,8 +31,9 @@ public class PlayerMovement : MonoBehaviour
 
 	//public Animator animator;
 
-	Rigidbody2D rb;
+	private Rigidbody2D rb;
 
+	
 	private float movement;
 	private bool jump;
 	private bool usingJetpack;
@@ -46,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
+		currentJetpackFuel = maxJetpackFuel;
 	}
 
 	// Update is called once per frame

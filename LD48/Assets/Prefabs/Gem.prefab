@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7499498740154754650}
   - component: {fileID: 7499498740154754981}
   - component: {fileID: 7499498740154754648}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Gem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,9 +49,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   value: 1
-  minPopForce: 1
-  maxPopForce: 3
-  pickUpTime: 3
+  minPopForce: 2
+  maxPopForce: 4
+  pickUpTime: 1
   pickupAnimation: {fileID: 7499498740154754648}
   rotateSpeed: 120
   rb2D: {fileID: 7499498740154754650}
