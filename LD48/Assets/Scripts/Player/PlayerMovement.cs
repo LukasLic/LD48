@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 	public float maxSpeed = 10f;
 
 	public float jumpSpeed = 5f;
+	public float jetPackSpeed = 5f;
 
 	public float horizontalDrag = 2f;
 
@@ -18,29 +19,43 @@ public class PlayerMovement : MonoBehaviour
 	public LayerMask wallMask;
 
 	public string horizontalInput;
-	public string jumpInput;
+	public KeyCode jumpInput;
+	public KeyCode jetpackInput;
+
+	public float maxJetpackFuel;
+	public float maxJetpackVelocity = 10f;
+	public float refuelSpeed = 2f;
+	public float waitBeforeRefuel = 3f;
+	private float waitBeforeRefuelTimer = 0f;
+	private float currentJetpackFuel;
 
 	//public Animator animator;
 
-	Rigidbody2D rb;
+	private Rigidbody2D rb;
 
+	
 	private float movement;
 	private bool jump;
+	private bool usingJetpack;
 
 	private bool isGrounded;
+	private bool isWaitingToRefuel;
 
 	private bool isFlipped;
+	public Transform graphicsTransform;
 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
+		currentJetpackFuel = maxJetpackFuel;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		movement = Input.GetAxisRaw(horizontalInput) * speed;
-		if (Input.GetButtonDown(jumpInput) && isGrounded)
+
+		if (Input.GetKeyDown(jumpInput) && isGrounded)
 			jump = true;
 
 		// Check for a wall
@@ -60,9 +75,55 @@ public class PlayerMovement : MonoBehaviour
 			}
 		}
 
+		if (Input.GetKey(jetpackInput) && Input.GetKey(jumpInput))
+		{
+			if (currentJetpackFuel > 0f)
+			{
+				currentJetpackFuel -= Time.deltaTime;
+				usingJetpack = true;
+			}
+		}
+		
+		if(currentJetpackFuel < maxJetpackFuel)
+        {
+			if(isGrounded)
+            {
+				if(isWaitingToRefuel)
+                {
+					if (waitBeforeRefuelTimer > 0f)
+					{
+						waitBeforeRefuelTimer -= Time.deltaTime;
+					}
+					else
+					{
+						currentJetpackFuel = Mathf.Min(maxJetpackFuel, currentJetpackFuel + Time.deltaTime * refuelSpeed);
+					}
+				}
+				else
+                {
+					isWaitingToRefuel = true;
+					waitBeforeRefuelTimer = waitBeforeRefuel;
+				}
+			}
+			else if(!isGrounded)
+            {
+				isWaitingToRefuel = false;
+			}
+        }
+
+		if(isGrounded && waitBeforeRefuelTimer <= 0f)
+		{			
+			if (currentJetpackFuel < 0f)
+			{
+				currentJetpackFuel = 0f;
+			}
+
+			
+		}
+
 		//animator.SetFloat("Speed", Mathf.Abs(movement));
 
-		Collider2D collider = Physics2D.OverlapCircle(rb.position + groundCheckPosition, groundCheckRadius, groundMask);
+			Collider2D collider = Physics2D.OverlapCircle(rb.position + groundCheckPosition, groundCheckRadius, groundMask);
 		if (collider != null)
 		{
 			if (rb.velocity.y < 0f)
@@ -99,14 +160,16 @@ public class PlayerMovement : MonoBehaviour
 		{
 			Vector2 flipScale = new Vector2(-1f, 1f);
 			//animator.transform.localScale *= flipScale;
-			transform.localScale *= flipScale;
+			//transform.localScale *= flipScale;
+			graphicsTransform.localScale *= flipScale;
 			isFlipped = false;
 		}
 		else if (movement <= -.1f && !isFlipped)
 		{
 			Vector2 flipScale = new Vector2(-1f, 1f);
 			//animator.transform.localScale *= flipScale;
-			transform.localScale *= flipScale;
+			//transform.localScale *= flipScale;
+			graphicsTransform.localScale *= flipScale;
 			isFlipped = true;
 		}
 
@@ -119,6 +182,14 @@ public class PlayerMovement : MonoBehaviour
 			isGrounded = false;
 			//animator.SetBool("IsGrounded", isGrounded);
 			//animator.SetTrigger("Jump");
+		}
+
+		if(usingJetpack)
+        {
+			Vector2 vel = rb.velocity;
+			vel.y = Mathf.Min(maxJetpackVelocity, vel.y + jetPackSpeed * Time.deltaTime);
+			rb.velocity = vel;
+			usingJetpack = false;
 		}
 	}
 
