@@ -42,7 +42,7 @@ public class MovableMiningController : MiningControllerBase
         transform.position = new Vector3(coordinates.x, coordinates.y, 0f);
     }
 
-    public override void Mine(Collider2D collider)
+    public override void Mine(Collider2D collider, int numberOfDigs)
     {
         var tileMiningController = GetTileMiningControllerNextToThisTile(collider);
         if(tileMiningController == null)
@@ -50,7 +50,7 @@ public class MovableMiningController : MiningControllerBase
             Debug.LogWarning("MininingComponent is null in method Mine");
             return;
         }
-        tileMiningController.DigInto();
+        tileMiningController.DigInto(numberOfDigs);
     }
 
     public override void UpdateState()
@@ -68,6 +68,11 @@ public class MovableMiningController : MiningControllerBase
         rightCollider.enabled = !rightDiggedOut;
         topCollider.enabled = !topDiggedOut;
         bottomCollider.enabled = !downDiggedOut;
+
+        TryRemoveCriticalPoint(leftDiggetOut, leftCollider);
+        TryRemoveCriticalPoint(rightDiggedOut, rightCollider);
+        TryRemoveCriticalPoint(topDiggedOut, topCollider);
+        TryRemoveCriticalPoint(downDiggedOut, bottomCollider);
 
         SetAllTileTypesInactive();
         if (leftDiggetOut && rightDiggedOut && topDiggedOut && downDiggedOut)
@@ -136,6 +141,17 @@ public class MovableMiningController : MiningControllerBase
         }
     }
 
+    private void TryRemoveCriticalPoint(bool isDiggedOut, Collider2D collider)
+    {
+        if (isDiggedOut)
+        {
+            CriticalPointManager.Instance.TryRemoveCriticalPointFromCollider(collider);
+        }
+    }
+
+    /// <summary>
+    /// Optimalize if problems with performance
+    /// </summary>
     private void SetAllTileTypesInactive()
     {
         none_tile.SetActive(false);
@@ -159,9 +175,10 @@ public class MovableMiningController : MiningControllerBase
     /// <summary>
     /// called on neighbour
     /// </summary>
-    public override void DigInto()
+    public override void DigInto(int numberOfDigs)
     {
-        --numberOfDigsToMine;
+        Debug.Log(numberOfDigs);
+        numberOfDigsToMine -= numberOfDigs;
         if(numberOfDigsToMine <= 0)
         {
             if (tilesManager == null)

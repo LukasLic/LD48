@@ -8,9 +8,9 @@ public abstract class MiningControllerBase : MonoBehaviour
 
     public abstract void Init(TilesManager tilesManager, (int x, int y) coordinates);
 
-    public abstract void Mine(Collider2D collider);
+    public abstract void Mine(Collider2D collider, int numberOfDigs);
 
     public abstract void UpdateState();
 
-    public abstract void DigInto();
+    public abstract void DigInto(int numberOfDigs);
 }
