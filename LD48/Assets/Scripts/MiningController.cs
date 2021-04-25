@@ -68,7 +68,6 @@ public class MiningController : MonoBehaviour
         topCollider.enabled = !topDiggedOut;
         bottomCollider.enabled = !downDiggedOut;
 
-        Debug.Log($"{leftDiggetOut} {rightDiggedOut} {topDiggedOut} {downDiggedOut}");
         SetAllTileTypesInactive();
         if (leftDiggetOut && rightDiggedOut && topDiggedOut && downDiggedOut)
         {
@@ -170,11 +169,8 @@ public class MiningController : MonoBehaviour
                 return;
             }
 
-            //var tileMiningController = tilesManager.GetTile(coordinates.x, coordinates.y);
-            //tileMiningController.gameObject.SetActive(true);
             gameObject.SetActive(true);
             isDiggedOut = true;
-            //originalTileMiningController.UpdateCollider(originalCollider);
             tilesManager.UpdateTileWithNeighbors(coordinates.x, coordinates.y);
         }
     }

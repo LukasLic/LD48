@@ -22,7 +22,6 @@ public class TilesManager : MonoBehaviour
             tiles.Add((roundedX, roundedY), tileComponent);
             tileComponent.Init(this, (roundedX, roundedY));
             tileComponent.isDiggedOut = true;
-            //UpdateTileWithNeighbors(roundedX, roundedY);
         }
 
         foreach(var tileComponent in tileComponents)
