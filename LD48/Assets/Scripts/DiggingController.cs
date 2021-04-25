@@ -21,7 +21,7 @@ public class DiggingController : MonoBehaviour
             if (hit)
             {
                 Debug.DrawLine(transform.position, hit.point, Color.red, 100);
-                var miningController = hit.collider.gameObject.GetComponentInParent<MiningController>();
+                var miningController = hit.collider.gameObject.GetComponentInParent<MiningControllerBase>();
                 if (miningController == null)
                 {
                     Debug.LogWarning("MiningController is null");

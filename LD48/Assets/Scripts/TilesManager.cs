@@ -9,11 +9,11 @@ public class TilesManager : MonoBehaviour
     public GameObject tilePrefab;
     public GameObject rootObject;
 
-    private readonly Dictionary<(int x, int y), MiningController> tiles = new Dictionary<(int x, int y), MiningController>();
+    private readonly Dictionary<(int x, int y), MiningControllerBase> tiles = new Dictionary<(int x, int y), MiningControllerBase>();
 
     public void Start()
     {
-        var tileComponents = rootObject.GetComponentsInChildren<MiningController>();
+        var tileComponents = rootObject.GetComponentsInChildren<MiningControllerBase>();
         foreach (var tileComponent in tileComponents)
         {
             var roundedX = Convert.ToInt32(Math.Round(tileComponent.gameObject.transform.position.x, 0));
@@ -21,7 +21,7 @@ public class TilesManager : MonoBehaviour
 
             tiles.Add((roundedX, roundedY), tileComponent);
             tileComponent.Init(this, (roundedX, roundedY));
-            tileComponent.isDiggedOut = true;
+            tileComponent.IsDiggedOut = true;
         }
 
         foreach(var tileComponent in tileComponents)
@@ -30,7 +30,7 @@ public class TilesManager : MonoBehaviour
         }
     }
 
-    public MiningController GetTile(int x, int y)
+    public MiningControllerBase GetTile(int x, int y)
     {
         if (tiles.TryGetValue((x, y), out var tile))
         {
@@ -39,7 +39,7 @@ public class TilesManager : MonoBehaviour
         return null;
     }
 
-    public MiningController GetOrAddNewTile(int x, int y)
+    public MiningControllerBase GetOrAddNewTile(int x, int y)
     {
         if (tiles.TryGetValue((x, y), out var tile))
         {
@@ -55,45 +55,33 @@ public class TilesManager : MonoBehaviour
         var rightNeighbor = GetTile(x + 1, y);
         var topNeighbor = GetTile(x, y + 1);
         var downNeighbor = GetTile(x, y - 1);
-        bool leftUpdate = false;
-        bool rightUpdate = false;
-        bool topUpdate = false;
-        bool downUpdate = false;
         if (leftNeighbor != null)
         {
             leftNeighbor.UpdateState();
-
-            leftUpdate = leftNeighbor.isDiggedOut;
         }
         if(rightNeighbor != null)
         {
             rightNeighbor.UpdateState();
-
-            rightUpdate = rightNeighbor.isDiggedOut;
         }
         if (topNeighbor != null)
         {
             topNeighbor.UpdateState();
-
-            topUpdate = topNeighbor.isDiggedOut;
         }
         if (downNeighbor != null)
         {
             downNeighbor.UpdateState();
-
-            downUpdate = downNeighbor.isDiggedOut;
         }
         tile.UpdateState();
     }
 
-    private MiningController AddNewTile(int originalX, int originalY)
+    private MiningControllerBase AddNewTile(int originalX, int originalY)
     {
         var tileGameObject = Instantiate(tilePrefab, new Vector3(originalX, originalY, 0), 
             Quaternion.identity, rootObject.transform);
         tileGameObject.SetActive(false);
         try
         {
-            var miningController = tileGameObject.GetComponent<MiningController>();
+            var miningController = tileGameObject.GetComponent<MiningControllerBase>();
             tiles.Add((originalX, originalY), miningController);
             miningController.Init(this, (originalX, originalY));
             return miningController;
