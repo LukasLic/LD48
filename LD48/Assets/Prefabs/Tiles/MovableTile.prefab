@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 5042172246188640207}
   - component: {fileID: 4039186254093143455}
   - component: {fileID: 8300502367312637573}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: UpperWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -918,7 +918,7 @@ GameObject:
   - component: {fileID: 8558059770338262357}
   - component: {fileID: 3627703325708191246}
   - component: {fileID: 3242904829209571129}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DownWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1850,7 +1850,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfDigsToMine: 5
-  isDiggedOut: 0
   leftCollider: {fileID: 961877527101941168}
   rightCollider: {fileID: 5426832952680556840}
   topCollider: {fileID: 8300502367312637573}
@@ -1883,7 +1882,7 @@ GameObject:
   - component: {fileID: 4685417856306353553}
   - component: {fileID: 8199182630023152023}
   - component: {fileID: 961877527101941168}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LeftWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3060,7 +3059,7 @@ GameObject:
   - component: {fileID: 620348439605592829}
   - component: {fileID: 534350082602317471}
   - component: {fileID: 5426832952680556840}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RightWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}

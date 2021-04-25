@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
 			if (wallCollider != null)
 			{
-				Debug.Log("Wall");
+				//Debug.Log("Wall");
 				movement = 0f;
 			}
 		}
