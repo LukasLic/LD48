@@ -5,6 +5,8 @@ using UnityEngine;
 public class DiggingController : MonoBehaviour
 {
     public float rayCastLenght;
+    public LayerMask hitLayers;
+
     // Update is called once per frame
     public void Update()
     {
@@ -17,21 +19,22 @@ public class DiggingController : MonoBehaviour
             var vectorToNormalize = mousePosition - transform.position;
             vectorToNormalize.Normalize();
             vectorToNormalize *= rayCastLenght;
-            var hit = Physics2D.Raycast(transform.position, vectorToNormalize, rayCastLenght);
+            var hit = Physics2D.Raycast(transform.position, vectorToNormalize, rayCastLenght, hitLayers.value);
+
             if (hit)
             {
-                Debug.DrawLine(transform.position, hit.point, Color.red, 100);
+                Debug.DrawLine(transform.position, hit.point, Color.red, 100f);
                 var miningController = hit.collider.gameObject.GetComponentInParent<MiningControllerBase>();
                 if (miningController == null)
                 {
-                    Debug.LogWarning("MiningController is null");
+                    Debug.LogWarning($"MiningController is null on {hit.collider.gameObject.name}");
                     return;
                 }
                 miningController.Mine(hit.collider);
             }
             else
             {
-                Debug.DrawLine(transform.position, transform.position + vectorToNormalize, Color.green, 100);
+                Debug.DrawLine(transform.position, transform.position + vectorToNormalize, Color.green, 100f);
             }
         }
     }

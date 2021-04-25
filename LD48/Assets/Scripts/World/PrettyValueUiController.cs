@@ -22,13 +22,13 @@ public class PrettyValueUiController : MonoBehaviour
 
             if (anim != null)
             {
-                if(value <0)
+                if (value > 0)
                 {
                     anim.Play(PlayMode.StopAll);
                 }
                 else
                 {
-                    // TODO: Play different animation and sound
+                    // TODO: Play different animation and sound when substracting
                 }
             }
         }
