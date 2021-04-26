@@ -19,7 +19,7 @@ public struct Contract
 
 public class ContractController : MonoBehaviour
 {
-    public GameObject ShopParentOverlay;
+    public GameObject ContractParentOverlay;
     public Vector3 playerStartPosition;
     public GameObject player;
     public GameObject winDialog;
@@ -66,9 +66,9 @@ public class ContractController : MonoBehaviour
         //DisplayContract("Test title", "This is description. \n Enjoy reading it. \n\n Your dear contractor.", 20, 90, GemType.Sapphire);
     }
 
-    public void SetShopWindowVisibility(bool state)
+    public void SetContractWindowVisibility(bool state)
     {
-        ShopParentOverlay.SetActive(state);
+        ContractParentOverlay.SetActive(state);
         var diggingController = player.GetComponent<DiggingController>();
         if (diggingController == null)
         {
@@ -107,7 +107,7 @@ public class ContractController : MonoBehaviour
                 }
                 else
                 {
-                    ShopParentOverlay.SetActive(false);
+                    ContractParentOverlay.SetActive(false);
                     var winDialogController = winDialog.GetComponent<WinDialogController>();
                     if(winDialogController == null)
                     {

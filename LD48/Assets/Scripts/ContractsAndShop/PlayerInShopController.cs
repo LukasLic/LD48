@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerInShopController : MonoBehaviour
 {
-    public GameObject gameController;
+    public ContractController contractController;
+    public ShopController shopController;
     public GameObject player;
 
     private bool isPlayerInShop;
@@ -14,12 +15,15 @@ public class PlayerInShopController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && isPlayerInShop)
         {
-            var contractController = gameController.GetComponent<ContractController>();
-            if(contractController == null)
+            if(contractController != null)
             {
-                Debug.LogWarning("Contract controller is null in Player in shop controller.");
+                contractController.SetContractWindowVisibility(isPlayerInShop);
             }
-            contractController.SetShopWindowVisibility(true);
+
+            if (shopController != null)
+            {
+                shopController.SetShopWindowVisibility(isPlayerInShop);
+            }
         }
     }
 
@@ -46,13 +50,18 @@ public class PlayerInShopController : MonoBehaviour
         if (collider.gameObject == player)
         {
             isPlayerInShop = false;
-            var contractController = gameController.GetComponent<ContractController>();
-            if (contractController == null)
+            
+            if (contractController != null)
             {
-                Debug.LogWarning("Contract controller is null in Player in shop controller.");
+                //Debug.LogWarning("Contract controller is null in Player in shop controller.");
+                contractController.SetContractWindowVisibility(isPlayerInShop);
             }
-            contractController.SetShopWindowVisibility(false);
 
+            if (shopController != null)
+            {
+                //Debug.LogWarning("Contract controller is null in Player in shop controller.");
+                shopController.SetShopWindowVisibility(isPlayerInShop);
+            }
         }
     }
 }
