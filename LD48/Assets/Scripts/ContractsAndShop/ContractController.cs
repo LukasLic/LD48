@@ -20,6 +20,9 @@ public struct Contract
 public class ContractController : MonoBehaviour
 {
     public GameObject ShopParentOverlay;
+    public Vector3 playerStartPosition;
+    public GameObject player;
+    public GameObject winDialog;
 
     [Header("Contract")]
     public GameObject rewardPrefab;
@@ -32,6 +35,7 @@ public class ContractController : MonoBehaviour
     public Image gemTypeIcon;
     public GemTypeToSpriteConversion spriteConversion;
     private bool contractActive = false;
+    private float currentContractSecondsLeft;
 
     [Header("ContractList")]
     public Contract[] contracts;
@@ -49,10 +53,7 @@ public class ContractController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            SetShopWindowVisibility(true);
-        }
+        SubstractDeltaFromContractTime();
     }
 
     private void Awake()
@@ -68,6 +69,12 @@ public class ContractController : MonoBehaviour
     public void SetShopWindowVisibility(bool state)
     {
         ShopParentOverlay.SetActive(state);
+        var diggingController = player.GetComponent<DiggingController>();
+        if (diggingController == null)
+        {
+            Debug.LogWarning("Digging controller is null in SetShopWindowVisibility method in ContractController");
+        }
+        diggingController.enabled = !state;
     }
 
     public void ContractButton()
@@ -76,21 +83,38 @@ public class ContractController : MonoBehaviour
         {
             // Verify if enough gems are in the inventory to finish contract
             // substract gems from inventory and give money
-            if(InvetoryController.Instance.GetValue(CurrentContract.gemType) >= CurrentContract.amount)
+            if (InvetoryController.Instance.GetValue(CurrentContract.gemType) >= CurrentContract.amount)
             {
+                Debug.Log("Enough gems");
                 // Complete contract
                 InvetoryController.Instance.Pay(CurrentContract.gemType, CurrentContract.amount);
 
-                // TODO TIME var rewardAmount = 
-                StartCoroutine(SpawnGemInLoop(0.2f, rewardPrefab, new Vector2(.5f, .75f), CurrentContract.amount));
+                var rewardAmount = currentContractSecondsLeft >= 0 ? CurrentContract.reward : CurrentContract.failedReward;
+                Debug.Log($"RewardAmount {rewardAmount}");
+                StartCoroutine(SpawnGemInLoop(0.2f, rewardPrefab, new Vector2(.5f, .75f), rewardAmount));
 
                 contractActive = false;
                 currentContractIndex++;
 
-                DisplayContract(CurrentContract);
+                //show next contract, if there is any, otherwise show winning dialog
+                Debug.Log($"CurrentContractIndex: {currentContractIndex}");
+                if(currentContractIndex < contracts.Length)
+                {
+                    DisplayContract(CurrentContract);
 
-                contractActiveText.enabled = false;
-                contractNotActiveText.enabled = true;
+                    contractActiveText.enabled = false;
+                    contractNotActiveText.enabled = true;
+                }
+                else
+                {
+                    ShopParentOverlay.SetActive(false);
+                    var winDialogController = winDialog.GetComponent<WinDialogController>();
+                    if(winDialogController == null)
+                    {
+                        Debug.LogWarning("WinDialogController is null in ContractController");
+                    }
+                    winDialogController.ShowDialog();
+                }
             }
             else
             {
@@ -102,6 +126,7 @@ public class ContractController : MonoBehaviour
         {
             // Activate the contract
             contractActive = true;
+            currentContractSecondsLeft = CurrentContract.time;
 
             contractActiveText.enabled = true;
             contractNotActiveText.enabled = false;
@@ -130,6 +155,19 @@ public class ContractController : MonoBehaviour
             gem.Init(popForce, InvetoryController.Instance);
 
             yield return new WaitForSeconds(interval);
+        }
+    }
+
+    private void SubstractDeltaFromContractTime()
+    {
+        //Is this correct?
+        if (contractActive && currentContractSecondsLeft >= 0)
+        {
+            currentContractSecondsLeft -= Time.deltaTime;
+            if(currentContractSecondsLeft < 0)
+            {
+                //TODO: Add sound effect
+            }
         }
     }
 }
