@@ -68,14 +68,14 @@ public class PlayerMovement : MonoBehaviour
 				0f,
 				wallMask);
 
-			if (wallCollider != null)
-			{
-				//Debug.Log("Wall");
-				movement = 0f;
-			}
-		}
+            if (wallCollider != null)
+            {
+                Debug.Log("Wall");
+                movement = 0f;
+            }
+        }
 
-		if (Input.GetKey(jetpackInput) && Input.GetKey(jumpInput))
+		if (/*Input.GetKey(jetpackInput) && */Input.GetKey(jumpInput))
 		{
 			if (currentJetpackFuel > 0f)
 			{

@@ -5,6 +5,7 @@ using UnityEngine;
 public class NonMovableMiningController : MiningControllerBase
 {
     public override bool IsDiggedOut { get; set; } = true;
+    public override bool IsVisible { get; set; } = true;
 
     public override void Init(TilesManager tilesManager, (int x, int y) coordinates)
     {
