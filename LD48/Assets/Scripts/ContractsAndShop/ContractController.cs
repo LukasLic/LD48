@@ -37,6 +37,11 @@ public class ContractController : MonoBehaviour
     private bool contractActive = false;
     private float currentContractSecondsLeft;
 
+    [Header("Active contract info")]
+    public Image activeContractGemTypeIcon;
+    public Text activeContractAmount;
+    public Text remainingContractTime;
+
     [Header("ContractList")]
     public Contract[] contracts;
     private int currentContractIndex = 0;
@@ -62,8 +67,23 @@ public class ContractController : MonoBehaviour
         contractActive = false;
         contractActiveText.enabled = false;
         contractNotActiveText.enabled = true;
+        SetEnableAndInitActiveContractInfo(false);
         DisplayContract(CurrentContract);
         //DisplayContract("Test title", "This is description. \n Enjoy reading it. \n\n Your dear contractor.", 20, 90, GemType.Sapphire);
+    }
+
+    private void SetEnableAndInitActiveContractInfo(bool enabled)
+    {
+        remainingContractTime.enabled = enabled;
+        activeContractAmount.enabled = enabled;
+        activeContractGemTypeIcon.enabled = enabled;
+
+        if (enabled)
+        {
+            currentContractSecondsLeft = CurrentContract.time;
+            activeContractAmount.text = CurrentContract.amount.ToString();
+            spriteConversion.SetImage(CurrentContract.gemType, activeContractGemTypeIcon);
+        }
     }
 
     public void SetShopWindowVisibility(bool state)
@@ -89,12 +109,14 @@ public class ContractController : MonoBehaviour
                 // Complete contract
                 InvetoryController.Instance.Pay(CurrentContract.gemType, CurrentContract.amount);
 
-                var rewardAmount = currentContractSecondsLeft >= 0 ? CurrentContract.reward : CurrentContract.failedReward;
+                var rewardAmount = currentContractSecondsLeft > 0 ? CurrentContract.reward : CurrentContract.failedReward;
                 Debug.Log($"RewardAmount {rewardAmount}");
                 StartCoroutine(SpawnGemInLoop(0.2f, rewardPrefab, new Vector2(.5f, .75f), rewardAmount));
 
                 contractActive = false;
                 currentContractIndex++;
+
+                SetEnableAndInitActiveContractInfo(false);
 
                 //show next contract, if there is any, otherwise show winning dialog
                 Debug.Log($"CurrentContractIndex: {currentContractIndex}");
@@ -126,10 +148,11 @@ public class ContractController : MonoBehaviour
         {
             // Activate the contract
             contractActive = true;
-            currentContractSecondsLeft = CurrentContract.time;
 
             contractActiveText.enabled = true;
             contractNotActiveText.enabled = false;
+
+            SetEnableAndInitActiveContractInfo(true);
 
             // TODO: Effect
         }
@@ -161,13 +184,16 @@ public class ContractController : MonoBehaviour
     private void SubstractDeltaFromContractTime()
     {
         //Is this correct?
-        if (contractActive && currentContractSecondsLeft >= 0)
+        if (contractActive && currentContractSecondsLeft > 0)
         {
             currentContractSecondsLeft -= Time.deltaTime;
-            if(currentContractSecondsLeft < 0)
+            if (currentContractSecondsLeft <= 0)
             {
+                currentContractSecondsLeft = 0;
                 //TODO: Add sound effect
             }
+            TimeSpan timeSpan = TimeSpan.FromSeconds(currentContractSecondsLeft);
+            remainingContractTime.text = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
         }
     }
 }
