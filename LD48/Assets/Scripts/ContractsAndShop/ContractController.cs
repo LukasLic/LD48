@@ -23,6 +23,7 @@ public class ContractController : MonoBehaviour
     public Vector3 playerStartPosition;
     public GameObject player;
     public GameObject winDialog;
+    public GameObject mineEntrance;
 
     [Header("Contract")]
     public GameObject rewardPrefab;
@@ -148,6 +149,7 @@ public class ContractController : MonoBehaviour
         {
             // Activate the contract
             contractActive = true;
+            mineEntrance.SetActive(false);
 
             contractActiveText.enabled = true;
             contractNotActiveText.enabled = false;
