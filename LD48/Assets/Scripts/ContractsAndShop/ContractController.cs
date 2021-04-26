@@ -34,6 +34,7 @@ public class ContractController : MonoBehaviour
     public Text contractAmount;
     public Image gemTypeIcon;
     public GemTypeToSpriteConversion spriteConversion;
+    public Text remainingContractTime;
     private bool contractActive = false;
     private float currentContractSecondsLeft;
 
@@ -62,6 +63,7 @@ public class ContractController : MonoBehaviour
         contractActive = false;
         contractActiveText.enabled = false;
         contractNotActiveText.enabled = true;
+        remainingContractTime.enabled = false;
         DisplayContract(CurrentContract);
         //DisplayContract("Test title", "This is description. \n Enjoy reading it. \n\n Your dear contractor.", 20, 90, GemType.Sapphire);
     }
@@ -89,12 +91,14 @@ public class ContractController : MonoBehaviour
                 // Complete contract
                 InvetoryController.Instance.Pay(CurrentContract.gemType, CurrentContract.amount);
 
-                var rewardAmount = currentContractSecondsLeft >= 0 ? CurrentContract.reward : CurrentContract.failedReward;
+                var rewardAmount = currentContractSecondsLeft > 0 ? CurrentContract.reward : CurrentContract.failedReward;
                 Debug.Log($"RewardAmount {rewardAmount}");
                 StartCoroutine(SpawnGemInLoop(0.2f, rewardPrefab, new Vector2(.5f, .75f), rewardAmount));
 
                 contractActive = false;
                 currentContractIndex++;
+
+                remainingContractTime.enabled = false;
 
                 //show next contract, if there is any, otherwise show winning dialog
                 Debug.Log($"CurrentContractIndex: {currentContractIndex}");
@@ -131,6 +135,8 @@ public class ContractController : MonoBehaviour
             contractActiveText.enabled = true;
             contractNotActiveText.enabled = false;
 
+            remainingContractTime.enabled = true;
+
             // TODO: Effect
         }
     }
@@ -161,13 +167,16 @@ public class ContractController : MonoBehaviour
     private void SubstractDeltaFromContractTime()
     {
         //Is this correct?
-        if (contractActive && currentContractSecondsLeft >= 0)
+        if (contractActive && currentContractSecondsLeft > 0)
         {
             currentContractSecondsLeft -= Time.deltaTime;
-            if(currentContractSecondsLeft < 0)
+            if (currentContractSecondsLeft <= 0)
             {
+                currentContractSecondsLeft = 0;
                 //TODO: Add sound effect
             }
+            TimeSpan timeSpan = TimeSpan.FromSeconds(currentContractSecondsLeft);
+            remainingContractTime.text = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
         }
     }
 }

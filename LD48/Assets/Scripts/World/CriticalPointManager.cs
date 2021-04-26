@@ -56,9 +56,9 @@ public class CriticalPointManager : GenericSingleton<CriticalPointManager>
     public void SetCriticalPoint(Collider2D collider)
     {
         var miningController = collider.gameObject.GetComponentInParent<MiningControllerBase>();
-        if (miningController is NonMovableMiningController)
+        if (miningController is NonMovableMiningController
+            || miningController is GrassMiningController)
         {
-            Debug.Log($"Into if");
             return;
         }
 
