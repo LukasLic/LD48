@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class DiggingController : MonoBehaviour
 {
+    public AudioClip digAudioClip;
+    public AudioClip criticalDigAudioClip;
+    public AudioSource playerAudioSource;
+
     public int digs;
     //public int criticalPointDigs;
 
@@ -43,6 +47,16 @@ public class DiggingController : MonoBehaviour
 
                 bool isCriticalPointHit = CriticalPointManager.Instance.IsCriticalPointHit(hit.collider, hit.point);
                 CriticalPointManager.Instance.SetCriticalPoint(hit.collider);
+                
+                //Play digging sound
+                if (isCriticalPointHit)
+                {
+                    playerAudioSource.PlayOneShot(criticalDigAudioClip);
+                }
+                else
+                {
+                    playerAudioSource.PlayOneShot(digAudioClip);
+                }
                 miningController.Mine(hit.collider, isCriticalPointHit ? (int)(digs * 1.5f) : digs);
             }
             else

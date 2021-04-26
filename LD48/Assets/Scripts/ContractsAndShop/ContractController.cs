@@ -19,9 +19,12 @@ public struct Contract
 
 public class ContractController : MonoBehaviour
 {
-    public AudioClip failedTimeOnContract;
-    public AudioSource audioSource;
+    public AudioClip failedTimeOnContractAudioClip;
     public AudioSource playerAudioSource;
+
+    public AudioClip contractDeliverySuccessAudioClip;
+    public AudioClip contractDeliveryFailAudioClip;
+    public AudioSource contractAudioSource;
 
     public GameObject ContractParentOverlay;
     public Vector3 playerStartPosition;
@@ -111,6 +114,7 @@ public class ContractController : MonoBehaviour
             // substract gems from inventory and give money
             if (InvetoryController.Instance.GetValue(CurrentContract.gemType) >= CurrentContract.amount)
             {
+                contractAudioSource.PlayOneShot(contractDeliverySuccessAudioClip);
                 Debug.Log("Enough gems");
                 // Complete contract
                 InvetoryController.Instance.Pay(CurrentContract.gemType, CurrentContract.amount);
@@ -203,7 +207,7 @@ public class ContractController : MonoBehaviour
                 currentContractSecondsLeft = 0;
                 //TODO: Add sound effect
 
-                playerAudioSource.PlayOneShot(failedTimeOnContract);
+                playerAudioSource.PlayOneShot(failedTimeOnContractAudioClip);
             }
             TimeSpan timeSpan = TimeSpan.FromSeconds(currentContractSecondsLeft);
             remainingContractTime.text = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
