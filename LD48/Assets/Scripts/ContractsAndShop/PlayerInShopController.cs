@@ -8,6 +8,10 @@ public class PlayerInShopController : MonoBehaviour
     public ShopController shopController;
     public GameObject player;
 
+    [Header("Prompts")]
+    GameObject contractsPrompt;
+    GameObject shopPrompt;
+
     private bool isPlayerInShop;
 
     // Update is called once per frame
@@ -37,6 +41,9 @@ public class PlayerInShopController : MonoBehaviour
         if(collider.gameObject == player)
         {
             isPlayerInShop = true;
+
+            if (contractsPrompt != null) { contractsPrompt.SetActive(true); }
+            if (shopPrompt != null) { shopPrompt.SetActive(true); }
         }
     }
 
@@ -62,6 +69,9 @@ public class PlayerInShopController : MonoBehaviour
                 //Debug.LogWarning("Contract controller is null in Player in shop controller.");
                 shopController.SetShopWindowVisibility(isPlayerInShop);
             }
+
+            if (contractsPrompt != null) { contractsPrompt.SetActive(false); }
+            if (shopPrompt != null) { shopPrompt.SetActive(false); }
         }
     }
 }

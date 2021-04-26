@@ -12,6 +12,16 @@ PrefabInstance:
       propertyPath: type
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7499498740154754649, guid: a0a0c1f118a3c564f86e67894f5bd0b9,
+        type: 3}
+      propertyPath: maxPopForce
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7499498740154754649, guid: a0a0c1f118a3c564f86e67894f5bd0b9,
+        type: 3}
+      propertyPath: minPopForce
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7499498740154754651, guid: a0a0c1f118a3c564f86e67894f5bd0b9,
         type: 3}
       propertyPath: m_Name

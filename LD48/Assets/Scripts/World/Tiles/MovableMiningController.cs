@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MovableMiningController : MiningControllerBase
 {
+    public ItemPopper itemPopper;
+
     private TilesManager tilesManager;
     private (int x, int y) coordinates;
     public int numberOfDigsToMine;
@@ -31,6 +33,8 @@ public class MovableMiningController : MiningControllerBase
         this.coordinates = coordinates;
 
         transform.position = new Vector3(coordinates.x, coordinates.y, 0f);
+
+        itemPopper.Init(numberOfDigsToMine);
     }
 
     public override void Mine(Collider2D collider, int numberOfDigs)
@@ -42,6 +46,17 @@ public class MovableMiningController : MiningControllerBase
             Debug.LogWarning("Direction is null in method Mine");
             return;
         }
+
+        // Pop items
+        if (numberOfDigsToMine <= numberOfDigs)
+        {
+            itemPopper.PopAllRemaining(collider.transform.position, direction.Value);
+        }
+        else
+        {
+            itemPopper.Pop(numberOfDigs, collider.transform.position, direction.Value);
+        }
+        
 
         DigInto(numberOfDigs);
     }
@@ -105,6 +120,7 @@ public class MovableMiningController : MiningControllerBase
     public override void DigInto(int numberOfDigs)
     {
         numberOfDigsToMine -= numberOfDigs;
+
         if(numberOfDigsToMine <= 0)
         {
             if (tilesManager == null)
