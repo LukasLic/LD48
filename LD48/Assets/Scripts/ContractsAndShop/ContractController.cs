@@ -21,6 +21,7 @@ public class ContractController : MonoBehaviour
 {
     public GameObject ContractParentOverlay;
     public Vector3 playerStartPosition;
+    public Transform coinPopPosition;
     public GameObject player;
     public GameObject winDialog;
 
@@ -111,7 +112,7 @@ public class ContractController : MonoBehaviour
 
                 var rewardAmount = currentContractSecondsLeft > 0 ? CurrentContract.reward : CurrentContract.failedReward;
                 Debug.Log($"RewardAmount {rewardAmount}");
-                StartCoroutine(SpawnGemInLoop(0.2f, rewardPrefab, new Vector2(.5f, .75f), rewardAmount));
+                StartCoroutine(SpawnGemInLoop(0.2f, rewardPrefab, new Vector2(-.5f, .75f), coinPopPosition.position, rewardAmount));
 
                 contractActive = false;
                 currentContractIndex++;
@@ -170,11 +171,12 @@ public class ContractController : MonoBehaviour
         spriteConversion.SetImage(contract.gemType, gemTypeIcon);
     }
 
-    IEnumerator SpawnGemInLoop(float interval, GameObject prefab, Vector2 popForce, int amount)
+    IEnumerator SpawnGemInLoop(float interval, GameObject prefab, Vector2 popForce, Vector3 position, int amount)
     {
         for (int i = 0; i < amount; i++)
         {
-            var gem = Instantiate(prefab, Vector3.zero, Quaternion.identity).GetComponent<Gem>();
+            var gem = Instantiate(prefab, position, Quaternion.identity).GetComponent<Gem>();
+            gem.transform.position = position;
             gem.Init(popForce, InvetoryController.Instance);
 
             yield return new WaitForSeconds(interval);

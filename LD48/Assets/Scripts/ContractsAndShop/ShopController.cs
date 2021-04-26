@@ -38,8 +38,8 @@ public class ShopController : MonoBehaviour
     private void Awake()
     {
         teleportItemControls.priceText.text = teleportPrice.ToString();
-        pickaxeItemControls.priceText.text = teleportPrice.ToString();
-        jetpackItemControls.priceText.text = teleportPrice.ToString();
+        pickaxeItemControls.priceText.text = pickaxeLevelPrice.ToString();
+        jetpackItemControls.priceText.text = jetpackFuelPowerPrice.ToString();
 
         teleportItemControls.maxUpgradedText.enabled = false;
         pickaxeItemControls.maxUpgradedText.enabled = false;
@@ -53,19 +53,19 @@ public class ShopController : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        // TEST, REMOVE
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            BuyTeleport();
-        }
-        else if (Input.GetKeyDown(KeyCode.K))
-        {
-            BuyPickaxeLevel();     
-        }
-        else if (Input.GetKeyDown(KeyCode.L))
-        {
-            BuyJetpackFuel();
-        }
+        //// TEST, REMOVE
+        //if (Input.GetKeyDown(KeyCode.J))
+        //{
+        //    BuyTeleport();
+        //}
+        //else if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    BuyPickaxeLevel();     
+        //}
+        //else if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    BuyJetpackFuel();
+        //}
     }
 
     public void BuyTeleport()

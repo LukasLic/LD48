@@ -493,6 +493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3606828750203189162}
   - component: {fileID: 3606828750203189165}
+  - component: {fileID: 3878867025704900465}
   m_Layer: 0
   m_Name: MovableTile
   m_TagString: Untagged
@@ -531,6 +532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc64d63c68546e41961a2ac3f9d4d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemPopper: {fileID: 3878867025704900465}
   numberOfDigsToMine: 5
   leftCollider: {fileID: 8424764479366052530}
   rightCollider: {fileID: 5826793751152132923}
@@ -542,6 +544,21 @@ MonoBehaviour:
   right_tile: {fileID: 633943390}
   top_tile: {fileID: 633943386}
   bottom_tile: {fileID: 633943312}
+--- !u!114 &3878867025704900465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3606828750203189206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23620b52d6899b243a66749b83dec909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLife: 0
+  amount: 0
+  prefabToPop: {fileID: 0}
 --- !u!1 &3627552636054806417
 GameObject:
   m_ObjectHideFlags: 0
