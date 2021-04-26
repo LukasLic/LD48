@@ -14,6 +14,10 @@ public struct ItemShopControls
 
 public class ShopController : MonoBehaviour
 {
+    public AudioClip failedBuyAudioClip;
+    public AudioClip successBuyAudioClip;
+    public AudioSource audioSource;
+
     public GameObject ShopParentOverlay;
     public GameObject player;
 
@@ -68,11 +72,13 @@ public class ShopController : MonoBehaviour
         //}
     }
 
+    //TODO: refactor so that all buying method uses the same basis functionality
     public void BuyTeleport()
     {
         if (InvetoryController.Instance.HasEnoughGems(GemType.Coin, teleportPrice)
             && numberOfTeleports < maxNumberOfTeleports)
         {
+            audioSource.PlayOneShot(successBuyAudioClip);
             InvetoryController.Instance.Pay(GemType.Coin, teleportPrice);
             numberOfTeleports++;
             var movementController = player.GetComponent<PlayerMovement>();
@@ -86,6 +92,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
+            audioSource.PlayOneShot(failedBuyAudioClip);
             Debug.Log("Cannot buy jetpack fuel. Not enough money or max level reached");
         }
     }
@@ -95,6 +102,7 @@ public class ShopController : MonoBehaviour
         if (InvetoryController.Instance.HasEnoughGems(GemType.Coin, pickaxeLevelPrice)
             && pickaxeLevel < maxPickaxeLevel)
         {
+            audioSource.PlayOneShot(successBuyAudioClip);
             InvetoryController.Instance.Pay(GemType.Coin, pickaxeLevelPrice);
             pickaxeLevel++;
             //increase pickaxe level
@@ -108,6 +116,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
+            audioSource.PlayOneShot(failedBuyAudioClip);
             Debug.Log("Cannot buy pickaxe level. Not enough money or max level reached");
         }
     }
@@ -117,6 +126,7 @@ public class ShopController : MonoBehaviour
         if (InvetoryController.Instance.HasEnoughGems(GemType.Coin, jetpackFuelPowerPrice)
             && jetpackPowerLevel < maxJetpackPowerLevel)
         {
+            audioSource.PlayOneShot(successBuyAudioClip);
             InvetoryController.Instance.Pay(GemType.Coin, jetpackFuelPowerPrice);
             jetpackPowerLevel++;
             var movementController = player.GetComponent<PlayerMovement>();
@@ -130,6 +140,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
+            audioSource.PlayOneShot(failedBuyAudioClip);
             Debug.Log("Cannot buy jetpack fuel. Not enough money or max level reached");
         }
     }

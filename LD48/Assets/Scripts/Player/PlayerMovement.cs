@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+	public AudioClip jumpAudioClip;
+	public AudioSource playerAudioSource;
+
 	[Header("WallDetection")]
 	public float wallDetectionOffset = .25f;
 	public Vector2 wallDetectionDimensions;
@@ -194,6 +197,7 @@ public class PlayerMovement : MonoBehaviour
 
 		if (jump)
 		{
+			playerAudioSource.PlayOneShot(jumpAudioClip);
 			Vector2 vel = rb.velocity;
 			vel.y = jumpSpeed;
 			rb.velocity = vel;

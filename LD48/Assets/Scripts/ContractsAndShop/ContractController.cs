@@ -28,9 +28,11 @@ public class ContractController : MonoBehaviour
 
 
     [Header("Rest")]
-    public AudioClip failedTimeOnContract;
-    public AudioSource audioSource;
+    public AudioClip failedTimeOnContractAudioClip;
     public AudioSource playerAudioSource;
+
+    public AudioClip contractDeliverySuccessAudioClip;
+    public AudioSource contractAudioSource;
 
     public GameObject ContractParentOverlay;
     public Vector3 playerStartPosition;
@@ -142,6 +144,7 @@ public class ContractController : MonoBehaviour
             // substract gems from inventory and give money
             if (true)
             {
+                contractAudioSource.PlayOneShot(contractDeliverySuccessAudioClip);
                 Debug.Log("Enough gems");
                 // Complete contract
                 
@@ -281,7 +284,7 @@ public class ContractController : MonoBehaviour
                 teleport.TeleportToStartPosition();
                 mineEntrance.SetActive(true);
 
-                playerAudioSource.PlayOneShot(failedTimeOnContract);
+                playerAudioSource.PlayOneShot(failedTimeOnContractAudioClip);
             }
             TimeSpan timeSpan = TimeSpan.FromSeconds(currentContractSecondsLeft);
             remainingContractTime.text = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);

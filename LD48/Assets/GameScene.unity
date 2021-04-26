@@ -3416,10 +3416,12 @@ MonoBehaviour:
   emeraldColor: {r: 0, g: 1, b: 0.2649979, a: 1}
   sapphireColor: {r: 0, g: 0.5751202, b: 1, a: 1}
   crystalColor: {r: 1, g: 1, b: 1, a: 1}
-  failedTimeOnContract: {fileID: 8300000, guid: ec1637cbbcd0d9f40bcb32f9e1c40375,
+  failedTimeOnContractAudioClip: {fileID: 8300000, guid: ec1637cbbcd0d9f40bcb32f9e1c40375,
     type: 3}
-  audioSource: {fileID: 230796088}
   playerAudioSource: {fileID: 436929740}
+  contractDeliverySuccessAudioClip: {fileID: 8300000, guid: 3801e3fe34c11054eb11db6cbdca90d5,
+    type: 3}
+  contractAudioSource: {fileID: 230796088}
   ContractParentOverlay: {fileID: 1834179919}
   playerStartPosition: {x: 0, y: 0, z: 0}
   coinPopPosition: {fileID: 77169333}
@@ -3535,6 +3537,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d8527010deb8e947ad321aa21e3e49d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  failedBuyAudioClip: {fileID: 8300000, guid: 6c629bdbb83876f47808077d5ba768a6, type: 3}
+  successBuyAudioClip: {fileID: 8300000, guid: b91cbcd68da9a164bb7b8437ad971785, type: 3}
+  audioSource: {fileID: 230796088}
   ShopParentOverlay: {fileID: 44239448}
   player: {fileID: 436929729}
   numberOfTeleports: 0
@@ -5468,6 +5473,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e68e9d83c6d0e2418ecec6f3af71b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpAudioClip: {fileID: 8300000, guid: a650d8834cd22f14292741b3a3c79c1e, type: 3}
+  playerAudioSource: {fileID: 436929740}
   wallDetectionOffset: 0.25
   wallDetectionDimensions: {x: 0.15, y: 0.45}
   animationController: {fileID: 436929737}
@@ -5584,6 +5591,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11526082a133ec4b96a6e052897b39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  digAudioClip: {fileID: 8300000, guid: 87dd3e3a70e91b349b1bf192be09f02e, type: 3}
+  criticalDigAudioClip: {fileID: 8300000, guid: ec8472c37fe77014d9134d54c49e251d,
+    type: 3}
+  playerAudioSource: {fileID: 436929740}
   digs: 1
   rayCastLenght: 0.75
   hitLayers:
@@ -15768,15 +15779,13 @@ Transform:
   - {fileID: 539041352}
   - {fileID: 1033645012}
   - {fileID: 1064426473}
-  - {fileID: 1993096486}
   - {fileID: 312298869}
   - {fileID: 1804384052}
   - {fileID: 1312403125}
   - {fileID: 1465657591}
-  - {fileID: 1590257383}
   - {fileID: 669407449}
-  - {fileID: 1464813194}
   - {fileID: 43564032}
+  - {fileID: 1993096486}
   - {fileID: 1310801239}
   - {fileID: 1306820198}
   - {fileID: 643415413}
@@ -15796,28 +15805,28 @@ Transform:
   - {fileID: 114502199}
   - {fileID: 1178623138}
   - {fileID: 106341875}
+  - {fileID: 1590257383}
   - {fileID: 60628468}
   - {fileID: 1388044228}
   - {fileID: 436031755}
+  - {fileID: 1464813194}
   - {fileID: 190943942}
   - {fileID: 1844059473}
-  - {fileID: 2380005709698498376}
+  - {fileID: 1558578958}
   - {fileID: 82103149}
   - {fileID: 1784261934478296791}
   - {fileID: 1940946043}
   - {fileID: 1928632697}
   - {fileID: 654540438}
-  - {fileID: 1558578958}
-  - {fileID: 1504037070}
-  - {fileID: 1949923693}
-  - {fileID: 1790024190}
-  - {fileID: 1982972475}
   - {fileID: 656059404}
   - {fileID: 1584558448}
+  - {fileID: 1790024190}
+  - {fileID: 1982972475}
   - {fileID: 276331140}
+  - {fileID: 2380005709698498376}
   - {fileID: 414393898}
   - {fileID: 51065374}
-  - {fileID: 1940751176}
+  - {fileID: 532310140}
   - {fileID: 700526783}
   - {fileID: 1281104727}
   - {fileID: 635545167}
@@ -15838,9 +15847,9 @@ Transform:
   - {fileID: 2012601370}
   - {fileID: 1681432774}
   - {fileID: 1550897697}
+  - {fileID: 1949923693}
   - {fileID: 423007648}
   - {fileID: 627221206}
-  - {fileID: 1047244009}
   - {fileID: 1235806745}
   - {fileID: 1033567408}
   - {fileID: 1617817743}
@@ -15851,10 +15860,12 @@ Transform:
   - {fileID: 734602935}
   - {fileID: 1062929580}
   - {fileID: 373845961}
+  - {fileID: 1047244009}
   - {fileID: 147969405}
   - {fileID: 825390789}
   - {fileID: 146320703}
   - {fileID: 155294448}
+  - {fileID: 1940751176}
   - {fileID: 178396033}
   - {fileID: 178107946}
   - {fileID: 827171145}
@@ -15869,6 +15880,7 @@ Transform:
   - {fileID: 2033662309}
   - {fileID: 35126328}
   - {fileID: 1674162227}
+  - {fileID: 1504037070}
   - {fileID: 17443134}
   - {fileID: 1738236899}
   - {fileID: 1924646368}
@@ -15894,7 +15906,6 @@ Transform:
   - {fileID: 1525171415}
   - {fileID: 1337359587}
   - {fileID: 755512842}
-  - {fileID: 532310140}
   - {fileID: 2112934789}
   - {fileID: 1007336582}
   - {fileID: 1408295514}

@@ -20,7 +20,7 @@ public class TeleportController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            TeleportToStartPosition();
+            //TeleportToStartPosition();
         }
     }
 
