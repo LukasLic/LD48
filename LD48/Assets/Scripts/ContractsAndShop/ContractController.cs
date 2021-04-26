@@ -22,6 +22,7 @@ public class ContractController : MonoBehaviour
     public GameObject ShopParentOverlay;
     public Vector3 playerStartPosition;
     public GameObject player;
+    public GameObject winDialog;
 
     [Header("Contract")]
     public GameObject rewardPrefab;
@@ -74,7 +75,6 @@ public class ContractController : MonoBehaviour
             Debug.LogWarning("Digging controller is null in SetShopWindowVisibility method in ContractController");
         }
         diggingController.enabled = !state;
-        Debug.Log($"Enabled state of digging controller: {diggingController.enabled}");
     }
 
     public void ContractButton()
@@ -96,10 +96,25 @@ public class ContractController : MonoBehaviour
                 contractActive = false;
                 currentContractIndex++;
 
-                DisplayContract(CurrentContract);
+                //show next contract, if there is any, otherwise show winning dialog
+                Debug.Log($"CurrentContractIndex: {currentContractIndex}");
+                if(currentContractIndex < contracts.Length)
+                {
+                    DisplayContract(CurrentContract);
 
-                contractActiveText.enabled = false;
-                contractNotActiveText.enabled = true;
+                    contractActiveText.enabled = false;
+                    contractNotActiveText.enabled = true;
+                }
+                else
+                {
+                    ShopParentOverlay.SetActive(false);
+                    var winDialogController = winDialog.GetComponent<WinDialogController>();
+                    if(winDialogController == null)
+                    {
+                        Debug.LogWarning("WinDialogController is null in ContractController");
+                    }
+                    winDialogController.ShowDialog();
+                }
             }
             else
             {

@@ -40,7 +40,7 @@ public class PlayerInShopController : MonoBehaviour
     {
         if (player == null)
         {
-            Debug.Log("Player is null in Player in shop controller");
+            Debug.Log("Player is null in PlayerInShopController");
             return;
         }
         if (collider.gameObject == player)
