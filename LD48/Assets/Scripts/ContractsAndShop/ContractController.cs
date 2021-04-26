@@ -28,12 +28,10 @@ public class ContractController : MonoBehaviour
 
 
     [Header("Rest")]
-    public AudioClip failedTimeOnContract;
     public AudioClip failedTimeOnContractAudioClip;
     public AudioSource playerAudioSource;
 
     public AudioClip contractDeliverySuccessAudioClip;
-    public AudioClip contractDeliveryFailAudioClip;
     public AudioSource contractAudioSource;
 
     public GameObject ContractParentOverlay;
