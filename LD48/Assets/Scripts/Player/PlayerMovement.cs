@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+	[Header("WallDetection")]
+	public float wallDetectionOffset = .25f;
+	public Vector2 wallDetectionDimensions;
+
+	public PlayerAnimationController animationController;
+
+	[Header("JetpackEffects")]
+	public ParticleSystem jetpackParticleSystem;
+	public Light jetpackLight;
+
+	public Light miningLight;
+
 	public float speed = 5f;
 	public float maxSpeed = 10f;
 
@@ -61,16 +73,17 @@ public class PlayerMovement : MonoBehaviour
 		// Check for a wall
 		if (movement != 0f)
 		{
-			var offset = (movement > 0f) ? 0.25f : -0.25f;
+			var offset = (movement > 0f) ? wallDetectionOffset : -wallDetectionOffset;
 			Collider2D wallCollider = Physics2D.OverlapBox(
 				new Vector2(rb.position.x + offset, rb.position.y),
-				new Vector2(0.15f, 0.6f),
+				wallDetectionDimensions,
 				0f,
 				wallMask);
 
-            if (wallCollider != null)
+
+			if (wallCollider != null)
             {
-                Debug.Log("Wall");
+                //Debug.Log("Wall");
                 movement = 0f;
             }
         }
@@ -137,10 +150,16 @@ public class PlayerMovement : MonoBehaviour
 			isGrounded = false;
 			//animator.SetBool("IsGrounded", isGrounded);
 		}
+
+		animationController.SetXDirection(movement);
+		animationController.SetSpeed(movement > 0f ? 1f : (movement < 0f) ? 1f : 0f);
+		animationController.SetGround(isGrounded);
 	}
 
 	private void FixedUpdate()
 	{
+		miningLight.enabled = transform.position.y < -0.5f;
+
 		float t = rb.velocity.x / maxSpeed;
 
 		float lerp = 0f;
@@ -184,7 +203,13 @@ public class PlayerMovement : MonoBehaviour
 			//animator.SetTrigger("Jump");
 		}
 
-		if(usingJetpack)
+
+		// Jetpack effects
+		if (usingJetpack) { jetpackParticleSystem.Play(); }
+		else { jetpackParticleSystem.Stop(); }
+		jetpackLight.enabled = usingJetpack;
+
+		if (usingJetpack)
         {
 			Vector2 vel = rb.velocity;
 			vel.y = Mathf.Min(maxJetpackVelocity, vel.y + jetPackSpeed * Time.deltaTime);
@@ -197,16 +222,22 @@ public class PlayerMovement : MonoBehaviour
 	{
 		Gizmos.DrawWireSphere((Vector2)transform.position + groundCheckPosition, groundCheckRadius);
 		Gizmos.DrawWireCube(
-			new Vector3(transform.position.x + 0.25f, transform.position.y),
-			new Vector3(0.15f, 0.6f));
+			new Vector3(transform.position.x + wallDetectionOffset, transform.position.y),
+			new Vector3(wallDetectionDimensions.x, wallDetectionDimensions.y));
 		Gizmos.DrawWireCube(
-			new Vector3(transform.position.x - 0.25f, transform.position.y),
-			new Vector3(0.15f, 0.6f));
+			new Vector3(transform.position.x - wallDetectionOffset, transform.position.y),
+			new Vector3(wallDetectionDimensions.x, wallDetectionDimensions.y));
 	}
 
 	private void OnDisable()
 	{
 		// Disable animator
 		//animator.SetFloat("Speed", 0f);
+	}
+
+	// Set from animation
+	public void Animation_StopMining()
+	{
+
 	}
 }

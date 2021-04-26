@@ -93,7 +93,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ab07fd430ff0454fbc32ef8a05f6f2d, type: 3}
+  - {fileID: 2100000, guid: 39dc05471b5c5a346baa03af0a97db7a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -219,7 +219,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 32d3d404187b294469d12687ee57314b, type: 2}
+  - {fileID: 2100000, guid: 39dc05471b5c5a346baa03af0a97db7a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -394,7 +394,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ab07fd430ff0454fbc32ef8a05f6f2d, type: 3}
+  - {fileID: 2100000, guid: 39dc05471b5c5a346baa03af0a97db7a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -471,7 +471,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ab07fd430ff0454fbc32ef8a05f6f2d, type: 3}
+  - {fileID: 2100000, guid: 39dc05471b5c5a346baa03af0a97db7a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -548,7 +548,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ab07fd430ff0454fbc32ef8a05f6f2d, type: 3}
+  - {fileID: 2100000, guid: 5b194da635c05624e89e36e9da988b7c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -625,7 +625,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ab07fd430ff0454fbc32ef8a05f6f2d, type: 3}
+  - {fileID: 2100000, guid: 39dc05471b5c5a346baa03af0a97db7a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -693,9 +693,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a807f6b11291f0439d5c255e910be67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftCollider: {fileID: 3194659342377109307}
-  rightCollider: {fileID: 604499523562634930}
   bottomCollider: {fileID: 8097809011459555829}
+  bottom_tile: {fileID: 6394956536530946201}
 --- !u!1 &7703641296453263896
 GameObject:
   m_ObjectHideFlags: 0

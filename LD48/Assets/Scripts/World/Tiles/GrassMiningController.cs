@@ -7,8 +7,9 @@ public class GrassMiningController : MiningControllerBase
     private TilesManager tilesManager;
     private (int x, int y) coordinates;
 
-    [Header("Colliders")]
+
     public Collider2D bottomCollider;
+    public GameObject bottom_tile;
 
     public override bool IsDiggedOut { get; set; } = false;
 
@@ -37,6 +38,12 @@ public class GrassMiningController : MiningControllerBase
         var downDiggedOut = downNeighbor != null ? downNeighbor.IsDiggedOut : false;
 
         bottomCollider.enabled = downDiggedOut;
+
+        if(bottom_tile != null)
+        {
+            bottom_tile.SetActive(downDiggedOut);
+        }
+        
     }
 
     public override void DigInto(int numberOfDigs)
