@@ -78,12 +78,9 @@ public class CriticalPointManager : GenericSingleton<CriticalPointManager>
         Invoke(nameof(RemoveCriticalPoint), secondsToRemoveCriticalPoint);
     }
 
-    public void TryRemoveCriticalPointFromCollider(Collider2D collider)
+    public void TryRemoveCriticalPointFromCollider()
     {
-        if(collider == tileWallColiderOfCurrentCriticalPoint)
-        {
-            RemoveCriticalPoint();
-        }
+        RemoveCriticalPoint();
     }
 
     private void RemoveCriticalPoint()
