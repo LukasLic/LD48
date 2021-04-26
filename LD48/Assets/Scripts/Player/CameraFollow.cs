@@ -37,7 +37,8 @@ public class CameraFollow : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKey(zoomOutKey))
+        //if (
+        //.GetKey(zoomOutKey))
         //{
         //    Camera.main.fieldOfView = Mathf.Min(zoomedOutFov, Camera.main.fieldOfView + zoomOutSpeed * Time.deltaTime);
         //}

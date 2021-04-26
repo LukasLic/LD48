@@ -18,14 +18,14 @@ public class GemTypeToSpriteConversion : MonoBehaviour
 
     public void SetImage(GemType gemType, Image image)
     {
-        try
-        {
-            image.sprite = conversionList.First(l => l.gemType == gemType).sprite;
-        }
-        catch
-        {
-            image.sprite = null;
-            Debug.LogError($"Gem type {gemType} does not have sprite conversion!");
-        }
+        //try
+        //{
+        //    image.sprite = conversionList.First(l => l.gemType == gemType).sprite;
+        //}
+        //catch
+        //{
+        //    image.sprite = null;
+        //    Debug.LogError($"Gem type {gemType} does not have sprite conversion!");
+        //}
     }
 }

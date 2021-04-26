@@ -9,8 +9,8 @@ public class PlayerInShopController : MonoBehaviour
     public GameObject player;
 
     [Header("Prompts")]
-    GameObject contractsPrompt;
-    GameObject shopPrompt;
+    public GameObject contractsPrompt;
+    public GameObject shopPrompt;
 
     private bool isPlayerInShop;
 

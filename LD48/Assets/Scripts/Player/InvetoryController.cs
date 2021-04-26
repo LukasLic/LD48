@@ -49,7 +49,7 @@ public class InvetoryController : GenericSingleton<InvetoryController>
 
             if(link.uiController.Value < 0)
             {
-                Debug.LogError($"Payed more gems that are avaliable!");
+                Debug.LogWarning($"Payed more gems that are avaliable!");
                 link.uiController.Value = 0;
             }
         }
