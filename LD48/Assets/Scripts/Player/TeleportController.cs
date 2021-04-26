@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class TeleportController : MonoBehaviour
 {
-    public Vector3 startPosition;
+    private Vector3 startPosition;
     public int numberOfAvailableTeleports;
+
+    public ShopController shopController;
+
+    private void Awake()
+    {
+        startPosition = transform.position;
+        shopController.UpdateTeleportCount(numberOfAvailableTeleports);
+    }
 
     // Update is called once per frame
     public void Update()
@@ -24,6 +32,8 @@ public class TeleportController : MonoBehaviour
             var cameraPosition = Camera.main.transform.parent.position;
             Camera.main.transform.parent.position = new Vector3(startPosition.x, startPosition.y, cameraPosition.z);
             --numberOfAvailableTeleports;
+
+            shopController.UpdateTeleportCount(numberOfAvailableTeleports);
         }
     }
 }
