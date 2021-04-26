@@ -19,6 +19,10 @@ public struct Contract
 
 public class ContractController : MonoBehaviour
 {
+    public AudioClip failedTimeOnContract;
+    public AudioSource audioSource;
+    public AudioSource playerAudioSource;
+
     public GameObject ContractParentOverlay;
     public Vector3 playerStartPosition;
     public Transform coinPopPosition;
@@ -118,7 +122,10 @@ public class ContractController : MonoBehaviour
                 contractActive = false;
                 currentContractIndex++;
 
+                mineEntrance.SetActive(true);
+
                 SetEnableAndInitActiveContractInfo(false);
+                ContractParentOverlay.SetActive(false);
 
                 //show next contract, if there is any, otherwise show winning dialog
                 Debug.Log($"CurrentContractIndex: {currentContractIndex}");
@@ -156,7 +163,7 @@ public class ContractController : MonoBehaviour
             contractNotActiveText.enabled = false;
 
             SetEnableAndInitActiveContractInfo(true);
-
+            ContractParentOverlay.SetActive(false);
             // TODO: Effect
         }
     }
@@ -195,6 +202,8 @@ public class ContractController : MonoBehaviour
             {
                 currentContractSecondsLeft = 0;
                 //TODO: Add sound effect
+
+                playerAudioSource.PlayOneShot(failedTimeOnContract);
             }
             TimeSpan timeSpan = TimeSpan.FromSeconds(currentContractSecondsLeft);
             remainingContractTime.text = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);

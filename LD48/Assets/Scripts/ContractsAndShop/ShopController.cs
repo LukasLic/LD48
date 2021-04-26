@@ -70,28 +70,23 @@ public class ShopController : MonoBehaviour
 
     public void BuyTeleport()
     {
-        if (InvetoryController.Instance.HasEnoughGems(GemType.Coin, teleportPrice))
+        if (InvetoryController.Instance.HasEnoughGems(GemType.Coin, teleportPrice)
+            && numberOfTeleports < maxNumberOfTeleports)
         {
-            var teleportController = player.GetComponent<TeleportController>();
-            if (teleportController == null)
+            InvetoryController.Instance.Pay(GemType.Coin, teleportPrice);
+            numberOfTeleports++;
+            var movementController = player.GetComponent<PlayerMovement>();
+            if (movementController == null)
             {
-                Debug.LogWarning("Teleport controller in shop is null");
+                Debug.LogWarning("Movement controller in shop is null");
                 return;
             }
 
-            if (teleportController.numberOfAvailableTeleports < 1)
-            {
-                InvetoryController.Instance.Pay(GemType.Coin, teleportPrice);
-
-                teleportController.numberOfAvailableTeleports = 1;
-
-                teleportItemControls.maxUpgradedText.enabled = true;
-                teleportItemControls.upgradeText.enabled = false;
-            }
+            movementController.speed = 12 + (numberOfTeleports) * 3;
         }
         else
         {
-            Debug.Log("Cannot buy teleport. Not enough money or max level reached");
+            Debug.Log("Cannot buy jetpack fuel. Not enough money or max level reached");
         }
     }
 
@@ -109,8 +104,7 @@ public class ShopController : MonoBehaviour
                 Debug.LogWarning("Digging controller in shop is null");
                 return;
             }
-            diggingController.digs += pickaxeLevel + 1;
-            diggingController.criticalPointDigs = pickaxeLevel + 2;
+            diggingController.digs = (int)Mathf.Pow(2, pickaxeLevel);
         }
         else
         {
@@ -132,7 +126,7 @@ public class ShopController : MonoBehaviour
                 return;
             }
 
-            movementController.maxJetpackVelocity = (jetpackPowerLevel + 1) * 5;
+            movementController.jetPackSpeed = 7 + (jetpackPowerLevel) * 4;
         }
         else
         {
@@ -142,16 +136,16 @@ public class ShopController : MonoBehaviour
 
     public void UpdateTeleportCount(int newCount)
     {
-        if(newCount < 1)
-        {
-            teleportItemControls.maxUpgradedText.enabled = false;
-            teleportItemControls.upgradeText.enabled = true;
-        }
-        else
-        {
-            teleportItemControls.maxUpgradedText.enabled = true;
-            teleportItemControls.upgradeText.enabled = false;
-        }
+        //if(newCount < 1)
+        //{
+        //    teleportItemControls.maxUpgradedText.enabled = false;
+        //    teleportItemControls.upgradeText.enabled = true;
+        //}
+        //else
+        //{
+        //    teleportItemControls.maxUpgradedText.enabled = true;
+        //    teleportItemControls.upgradeText.enabled = false;
+        //}
     }
 
     public void SetShopWindowVisibility(bool state)

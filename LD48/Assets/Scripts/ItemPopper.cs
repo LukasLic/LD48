@@ -11,7 +11,7 @@ public class ItemPopper : MonoBehaviour
     public int amount;
     private int remaining;
 
-    private int popAfterTaken;
+    public int popAfterTaken;
     private int previousRemaining;
 
     public GameObject prefabToPop;
@@ -20,7 +20,7 @@ public class ItemPopper : MonoBehaviour
     {
         if(amount > 0)
         {
-            popAfterTaken = maxLife / amount;
+            //popAfterTaken = maxLife / amount;
             remaining = amount;
         }
     }
@@ -35,10 +35,10 @@ public class ItemPopper : MonoBehaviour
         var takenDamage = count + previousRemaining;
         var toPop = takenDamage / popAfterTaken; // How much to pop
 
-        previousRemaining = toPop % popAfterTaken;
+        previousRemaining = takenDamage % popAfterTaken;
 
         // Dont pop more then remaining
-        if(toPop >remaining)
+        if (toPop > remaining)
         {
             toPop = 0;
             remaining = 0;
