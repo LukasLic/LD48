@@ -21,8 +21,8 @@ public class TeleportController : MonoBehaviour
         if(numberOfAvailableTeleports > 0)
         {
             transform.position = startPosition;
-            var cameraPosition = Camera.main.transform.position;
-            Camera.main.transform.position = new Vector3(startPosition.x, startPosition.y, cameraPosition.z);
+            var cameraPosition = Camera.main.transform.parent.position;
+            Camera.main.transform.parent.position = new Vector3(startPosition.x, startPosition.y, cameraPosition.z);
             --numberOfAvailableTeleports;
         }
     }
