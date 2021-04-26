@@ -17,22 +17,22 @@ public class GameController : GenericSingleton<GameController>
 
     private void Update()
     {
-        // TEST, REMOVE
-        if(Input.GetKeyDown(KeyCode.I))
-        {
-            var gem = Instantiate(emeraldPrefab, Vector3.zero, Quaternion.identity).GetComponent<Gem>();
-            gem.Init(new Vector2(.5f, .75f), InvetoryController.Instance);
-        }
-        else if (Input.GetKeyDown(KeyCode.O))
-        {
-            var gem = Instantiate(saphirePrefab, Vector3.zero, Quaternion.identity).GetComponent<Gem>();
-            gem.Init(new Vector2(.5f, .75f), InvetoryController.Instance);
-        }
-        else if (Input.GetKeyDown(KeyCode.P))
-        {
-            var gem = Instantiate(crystalPrefab, Vector3.zero, Quaternion.identity).GetComponent<Gem>();
-            gem.Init(new Vector2(.5f, .75f), InvetoryController.Instance);
-        }
+        //// TEST, REMOVE
+        //if(Input.GetKeyDown(KeyCode.I))
+        //{
+        //    var gem = Instantiate(emeraldPrefab, Vector3.zero, Quaternion.identity).GetComponent<Gem>();
+        //    gem.Init(new Vector2(.5f, .75f), InvetoryController.Instance);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.O))
+        //{
+        //    var gem = Instantiate(saphirePrefab, Vector3.zero, Quaternion.identity).GetComponent<Gem>();
+        //    gem.Init(new Vector2(.5f, .75f), InvetoryController.Instance);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    var gem = Instantiate(crystalPrefab, Vector3.zero, Quaternion.identity).GetComponent<Gem>();
+        //    gem.Init(new Vector2(.5f, .75f), InvetoryController.Instance);
+        //}
 
     }
 
