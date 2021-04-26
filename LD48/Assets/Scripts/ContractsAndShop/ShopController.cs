@@ -109,8 +109,8 @@ public class ShopController : MonoBehaviour
                 Debug.LogWarning("Digging controller in shop is null");
                 return;
             }
-            diggingController.digs += (pickaxeLevel + 1) * 1;
-            diggingController.criticalPointDigs = (pickaxeLevel + 1) * 2;
+            diggingController.digs += pickaxeLevel + 1;
+            diggingController.criticalPointDigs = pickaxeLevel + 2;
         }
         else
         {
