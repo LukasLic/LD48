@@ -34,9 +34,13 @@ public class ContractController : MonoBehaviour
     public Text contractAmount;
     public Image gemTypeIcon;
     public GemTypeToSpriteConversion spriteConversion;
-    public Text remainingContractTime;
     private bool contractActive = false;
     private float currentContractSecondsLeft;
+
+    [Header("Active contract info")]
+    public Image activeContractGemTypeIcon;
+    public Text activeContractAmount;
+    public Text remainingContractTime;
 
     [Header("ContractList")]
     public Contract[] contracts;
@@ -63,9 +67,23 @@ public class ContractController : MonoBehaviour
         contractActive = false;
         contractActiveText.enabled = false;
         contractNotActiveText.enabled = true;
-        remainingContractTime.enabled = false;
+        SetEnableAndInitActiveContractInfo(false);
         DisplayContract(CurrentContract);
         //DisplayContract("Test title", "This is description. \n Enjoy reading it. \n\n Your dear contractor.", 20, 90, GemType.Sapphire);
+    }
+
+    private void SetEnableAndInitActiveContractInfo(bool enabled)
+    {
+        remainingContractTime.enabled = enabled;
+        activeContractAmount.enabled = enabled;
+        activeContractGemTypeIcon.enabled = enabled;
+
+        if (enabled)
+        {
+            currentContractSecondsLeft = CurrentContract.time;
+            activeContractAmount.text = CurrentContract.amount.ToString();
+            spriteConversion.SetImage(CurrentContract.gemType, activeContractGemTypeIcon);
+        }
     }
 
     public void SetShopWindowVisibility(bool state)
@@ -98,7 +116,7 @@ public class ContractController : MonoBehaviour
                 contractActive = false;
                 currentContractIndex++;
 
-                remainingContractTime.enabled = false;
+                SetEnableAndInitActiveContractInfo(false);
 
                 //show next contract, if there is any, otherwise show winning dialog
                 Debug.Log($"CurrentContractIndex: {currentContractIndex}");
@@ -130,12 +148,11 @@ public class ContractController : MonoBehaviour
         {
             // Activate the contract
             contractActive = true;
-            currentContractSecondsLeft = CurrentContract.time;
 
             contractActiveText.enabled = true;
             contractNotActiveText.enabled = false;
 
-            remainingContractTime.enabled = true;
+            SetEnableAndInitActiveContractInfo(true);
 
             // TODO: Effect
         }
