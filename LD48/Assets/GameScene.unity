@@ -3445,36 +3445,40 @@ MonoBehaviour:
   - amount: 3
     gemType: 0
     time: 120
-    title: C1
-    description: This is description 1. \n Enjoy reading it. \n\n Your dear contractor.
+    title: Left Click
+    description: First things first. Use your mouse to dig up tiles. Mine me that
+      emerald down there! Go, go GO!
     reward: 5
     failedReward: 3
   - amount: 9
     gemType: 0
     time: 110
-    title: C2
-    description: This is description 2. \n Enjoy reading it. \n\n Your dear contractor.
+    title: Going Deeper
+    description: You can use coins to buy useful upgrades, complete contracts to gain
+      coins. \nI will reward you extra if you complete the contract in time.
     reward: 16
     failedReward: 12
   - amount: 12
     gemType: 1
     time: 120
-    title: Final
-    description: Hahahaha
+    title: Deep Blue
+    description: Enough emeralds! I need some blue, it goes well with my eyes. They
+      are harder to mine, I hope you have a better pickaxe.
     reward: 20
     failedReward: 15
   - amount: 8
     gemType: 0
-    time: 30
-    title: Final
-    description: Hahahaha
+    time: 60
+    title: Leftovers
+    description: Not enough emeralds! I'm sorry, they are just too useful for decorating.
     reward: 40
     failedReward: 30
   - amount: 4
     gemType: 2
     time: 120
-    title: Final
-    description: Hahahaha
+    title: Crystal Clear
+    description: Final test. Crystals are the hardest to find and dig. But my decorated
+      flower pot won't be complete without them.
     reward: 120
     failedReward: 10
 --- !u!114 &230796084
@@ -5351,7 +5355,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Teleport
+  m_Text: Speed
 --- !u!222 &431726873
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5497,10 +5501,10 @@ MonoBehaviour:
   horizontalInput: Horizontal
   jumpInput: 32
   jetpackInput: 304
-  maxJetpackFuel: 0.5
+  maxJetpackFuel: 0.75
   maxJetpackVelocity: 10
-  refuelSpeed: 1
-  waitBeforeRefuel: 1
+  refuelSpeed: 2
+  waitBeforeRefuel: 0.5
   graphicsTransform: {fileID: 1761076967}
 --- !u!4 &436929731
 Transform:
@@ -5596,7 +5600,7 @@ MonoBehaviour:
     type: 3}
   playerAudioSource: {fileID: 436929740}
   digs: 1
-  rayCastLenght: 0.75
+  rayCastLenght: 0.9
   hitLayers:
     serializedVersion: 2
     m_Bits: 3072
@@ -6301,8 +6305,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Item description goes here.Item description goes here.Item description goes
-    here.Item description goes here.Item description goes here.
+  m_Text: Stronger steel makes a better pickaxe. If you don't want to swing so much,
+    upgrade this.
 --- !u!222 &514888188
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17152,8 +17156,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Item description goes here.Item description goes here.Item description goes
-    here.Item description goes here.Item description goes here.
+  m_Text: Jetpack enables you to traverse mine quickly. Hold SPACE to ignite it. However,
+    it needs a bit of time to refuel.
 --- !u!222 &1253787590
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26546,7 +26550,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 12
+    m_FontSize: 16
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
@@ -26557,7 +26561,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ACTIVE
+  m_Text: MAX
 --- !u!222 &1681128258
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31513,8 +31517,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Item description goes here.Item description goes here.Item description goes
-    here.Item description goes here.Item description goes here.
+  m_Text: Good boots are sure hard to find, eh? I have the best materials, soon you
+    will be running at the speed of wind.
 --- !u!222 &2132369235
 CanvasRenderer:
   m_ObjectHideFlags: 0
