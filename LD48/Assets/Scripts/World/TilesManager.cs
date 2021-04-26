@@ -76,50 +76,23 @@ public class TilesManager : MonoBehaviour
 
     public void UpdateTileAndNeighbors(int x, int y)
     {
-        //// All combinations except 0,0
-        //for (int i = -1; i <= 1; i++)
-        //{
-        //    for (int j = -1; j <= 1; j++)
-        //    {
-        //        if (i == 0 && j == 0) { continue; }
+        // All combinations except 0,0
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                if (i == 0 && j == 0) { continue; }
 
-        //        var neighbor = GetOrAddNewTile(x + i, y + j);
+                var neighbor = GetOrAddNewTile(x + i, y + j);
 
-        //        if(neighbor != null && !neighbor.IsDiggedOut)
-        //        {
-        //            neighbor.UpdateState();
-        //        }
-        //    }
-        //}
-
-        GetOrAddNewTile(x - 1, y).UpdateState();
-        GetOrAddNewTile(x + 1, y).UpdateState();
-        GetOrAddNewTile(x, 1).UpdateState();
-        GetOrAddNewTile(x, 1).UpdateState();
+                if (neighbor != null && !neighbor.IsDiggedOut)
+                {
+                    neighbor.UpdateState();
+                }
+            }
+        }
 
         GetTile(x, y).UpdateState();
-
-        //var leftNeighbor = GetOrAddNewTile(x - 1, y);
-        //var rightNeighbor = GetOrAddNewTile(x + 1, y);
-        //var topNeighbor = GetOrAddNewTile(x, y + 1);
-        //var downNeighbor = GetOrAddNewTile(x, y - 1);
-
-        //if (leftNeighbor != null && !leftNeighbor.IsDiggedOut)
-        //{
-        //    leftNeighbor.UpdateState();
-        //}
-        //if(rightNeighbor != null && !rightNeighbor.IsDiggedOut)
-        //{
-        //    rightNeighbor.UpdateState();
-        //}
-        //if (topNeighbor != null && !topNeighbor.IsDiggedOut)
-        //{
-        //    topNeighbor.UpdateState();
-        //}
-        //if (downNeighbor != null && !downNeighbor.IsDiggedOut)
-        //{
-        //    downNeighbor.UpdateState();
-        //}
     }
 
     private MiningControllerBase AddNewTile(int originX, int originY)
