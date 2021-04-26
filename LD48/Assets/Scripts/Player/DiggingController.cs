@@ -52,6 +52,8 @@ public class DiggingController : MonoBehaviour
                 if (isCriticalPointHit)
                 {
                     playerAudioSource.PlayOneShot(criticalDigAudioClip);
+
+                    //Debug.Log("Critical");
                 }
                 else
                 {
@@ -70,5 +72,6 @@ public class DiggingController : MonoBehaviour
     public void Animation_StopMining()
     {
         isMining = false;
+        animationController.SetMining(false);
     }
 }
