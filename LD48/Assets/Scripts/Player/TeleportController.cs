@@ -26,7 +26,7 @@ public class TeleportController : MonoBehaviour
 
     public void TeleportToStartPosition()
     {
-        if(numberOfAvailableTeleports > 0)
+        if(/*numberOfAvailableTeleports > 0*/true)
         {
             transform.position = startPosition;
             var cameraPosition = Camera.main.transform.parent.position;

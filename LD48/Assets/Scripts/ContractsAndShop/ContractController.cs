@@ -19,6 +19,15 @@ public struct Contract
 
 public class ContractController : MonoBehaviour
 {
+    public TeleportController teleport;
+
+    [Header("Colors")]
+    public Color emeraldColor;
+    public Color sapphireColor;
+    public Color crystalColor;
+
+
+    [Header("Rest")]
     public AudioClip failedTimeOnContract;
     public AudioSource audioSource;
     public AudioSource playerAudioSource;
@@ -89,6 +98,28 @@ public class ContractController : MonoBehaviour
             currentContractSecondsLeft = CurrentContract.time;
             activeContractAmount.text = CurrentContract.amount.ToString();
             spriteConversion.SetImage(CurrentContract.gemType, activeContractGemTypeIcon);
+
+            switch (CurrentContract.gemType)
+            {
+                case GemType.Emerald:
+                    activeContractGemTypeIcon.color = emeraldColor;
+                    gemTypeIcon.color = emeraldColor;
+                    break;
+                case GemType.Sapphire:
+                    activeContractGemTypeIcon.color = sapphireColor;
+                    gemTypeIcon.color = sapphireColor;
+                    break;
+                case GemType.Crystal:
+                    activeContractGemTypeIcon.color = crystalColor;
+                    gemTypeIcon.color = crystalColor;
+                    break;
+                case GemType.Coin:
+                    activeContractGemTypeIcon.color = Color.yellow;
+                    gemTypeIcon.color = Color.yellow;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -109,13 +140,35 @@ public class ContractController : MonoBehaviour
         {
             // Verify if enough gems are in the inventory to finish contract
             // substract gems from inventory and give money
-            if (InvetoryController.Instance.GetValue(CurrentContract.gemType) >= CurrentContract.amount)
+            if (true)
             {
                 Debug.Log("Enough gems");
                 // Complete contract
+                
+
+                //var rewardAmount = currentContractSecondsLeft > 0 ? CurrentContract.reward : CurrentContract.failedReward;
+                //InvetoryController.Instance.GetValue(CurrentContract.gemType) >= CurrentContract.amount
+
+                // amount AND time
+                //var rewardAmount = InvetoryController.Instance.GetValue(CurrentContract.gemType) >= CurrentContract.amount ?
+                //                   (currentContractSecondsLeft > 0 ? CurrentContract.reward : CurrentContract.failedReward)
+                //                   : CurrentContract.failedReward;
+
+                var rewardAmount = CurrentContract.failedReward;
+
+                if (InvetoryController.Instance.GetValue(CurrentContract.gemType) >= CurrentContract.amount)
+                {
+                    Debug.Log("rewardAmount ok");
+                    if(currentContractSecondsLeft > 0)
+                    {
+                        Debug.Log("time ok");
+
+                        rewardAmount = CurrentContract.reward;
+                    }
+                }
+
                 InvetoryController.Instance.Pay(CurrentContract.gemType, CurrentContract.amount);
 
-                var rewardAmount = currentContractSecondsLeft > 0 ? CurrentContract.reward : CurrentContract.failedReward;
                 Debug.Log($"RewardAmount {rewardAmount}");
                 StartCoroutine(SpawnGemInLoop(0.2f, rewardPrefab, new Vector2(-.5f, .75f), coinPopPosition.position, rewardAmount));
 
@@ -177,7 +230,29 @@ public class ContractController : MonoBehaviour
         var seconds = (contract.time % 60 == 0) ? "00" : (contract.time % 60).ToString();
         contractTime.text = $"{contract.time / 60}:{seconds}";
 
-        spriteConversion.SetImage(contract.gemType, gemTypeIcon);
+        //spriteConversion.SetImage(contract.gemType, gemTypeIcon);
+
+        switch (CurrentContract.gemType)
+        {
+            case GemType.Emerald:
+                activeContractGemTypeIcon.color = emeraldColor;
+                gemTypeIcon.color = emeraldColor;
+                break;
+            case GemType.Sapphire:
+                activeContractGemTypeIcon.color = sapphireColor;
+                gemTypeIcon.color = sapphireColor;
+                break;
+            case GemType.Crystal:
+                activeContractGemTypeIcon.color = crystalColor;
+                gemTypeIcon.color = crystalColor;
+                break;
+            case GemType.Coin:
+                activeContractGemTypeIcon.color = Color.yellow;
+                gemTypeIcon.color = Color.yellow;
+                break;
+            default:
+                break;
+        }
     }
 
     IEnumerator SpawnGemInLoop(float interval, GameObject prefab, Vector2 popForce, Vector3 position, int amount)
@@ -202,6 +277,9 @@ public class ContractController : MonoBehaviour
             {
                 currentContractSecondsLeft = 0;
                 //TODO: Add sound effect
+
+                teleport.TeleportToStartPosition();
+                mineEntrance.SetActive(true);
 
                 playerAudioSource.PlayOneShot(failedTimeOnContract);
             }
