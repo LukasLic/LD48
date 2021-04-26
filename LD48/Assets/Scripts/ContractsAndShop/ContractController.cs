@@ -21,6 +21,7 @@ public class ContractController : MonoBehaviour
 {
     public GameObject ShopParentOverlay;
     public Vector3 playerStartPosition;
+    public GameObject player;
 
     [Header("Contract")]
     public GameObject rewardPrefab;
@@ -67,14 +68,19 @@ public class ContractController : MonoBehaviour
     public void SetShopWindowVisibility(bool state)
     {
         ShopParentOverlay.SetActive(state);
+        var diggingController = player.GetComponent<DiggingController>();
+        if (diggingController == null)
+        {
+            Debug.LogWarning("Digging controller is null in SetShopWindowVisibility method in ContractController");
+        }
+        diggingController.enabled = !state;
+        Debug.Log($"Enabled state of digging controller: {diggingController.enabled}");
     }
 
     public void ContractButton()
     {
-        Debug.Log("ContractButton");
         if(contractActive)
         {
-            Debug.Log("ContractActive");
             // Verify if enough gems are in the inventory to finish contract
             // substract gems from inventory and give money
             if (InvetoryController.Instance.GetValue(CurrentContract.gemType) >= CurrentContract.amount)
