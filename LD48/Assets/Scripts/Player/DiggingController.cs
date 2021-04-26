@@ -10,11 +10,18 @@ public class DiggingController : MonoBehaviour
     public float rayCastLenght;
     public LayerMask hitLayers;
 
+    public PlayerAnimationController animationController;
+
+    private bool isMining = false;
+
     // Update is called once per frame
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isMining)
         {
+            animationController.SetMining(true);
+            isMining = true;
+
             //raycast to mouse direction
             var mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
             Input.mousePosition.y, transform.position.z - Camera.main.transform.position.z));
@@ -43,5 +50,11 @@ public class DiggingController : MonoBehaviour
                 Debug.DrawLine(transform.position, transform.position + vectorToNormalize, Color.green, 100f);
             }
         }
+    }
+
+    // Set from animation
+    public void Animation_StopMining()
+    {
+        isMining = false;
     }
 }

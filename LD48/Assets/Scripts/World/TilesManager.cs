@@ -9,22 +9,48 @@ public class TilesManager : MonoBehaviour
     public GameObject tilePrefab;
     public GameObject rootObject;
 
-    private readonly Dictionary<(int x, int y), MiningControllerBase> tiles = new Dictionary<(int x, int y), MiningControllerBase>();
+    private Dictionary<(int x, int y), MiningControllerBase> tiles = new Dictionary<(int x, int y), MiningControllerBase>();
 
     public void Start()
     {
         var tileComponents = rootObject.GetComponentsInChildren<MiningControllerBase>();
+
+        // Scan for tiles
         foreach (var tileComponent in tileComponents)
         {
             var roundedX = Convert.ToInt32(Math.Round(tileComponent.gameObject.transform.position.x, 0));
             int roundedY = Convert.ToInt32(Math.Round(tileComponent.gameObject.transform.position.y, 0));
 
             tiles.Add((roundedX, roundedY), tileComponent);
-            tileComponent.Init(this, (roundedX, roundedY));
-            tileComponent.IsDiggedOut = true;
         }
 
-        foreach(var tileComponent in tileComponents)
+        // Surround empty tiles
+        var emptyTileComponents = rootObject.GetComponentsInChildren<EmptyMiningController>();
+        foreach (var tileComponent in emptyTileComponents)
+        {
+            var roundedX = Convert.ToInt32(Math.Round(tileComponent.gameObject.transform.position.x, 0));
+            int roundedY = Convert.ToInt32(Math.Round(tileComponent.gameObject.transform.position.y, 0));
+
+            tileComponent.Surround((roundedX, roundedY), this);
+        }
+
+        // Rescan
+        tiles = new Dictionary<(int x, int y), MiningControllerBase>(); // Recreate dictionary
+        tileComponents = rootObject.GetComponentsInChildren<MiningControllerBase>();
+
+        // Prepare grid with empty tiles
+        foreach (var tileComponent in tileComponents)
+        {
+            // TODO: Optimize
+            var roundedX = Convert.ToInt32(Math.Round(tileComponent.gameObject.transform.position.x, 0));
+            int roundedY = Convert.ToInt32(Math.Round(tileComponent.gameObject.transform.position.y, 0));
+
+            tiles.Add((roundedX, roundedY), tileComponent);
+            tileComponent.Init(this, (roundedX, roundedY));
+            tileComponent.IsDiggedOut = false;
+        }
+
+        foreach (var tileComponent in tileComponents)
         {
             tileComponent.UpdateState();
         }
@@ -48,48 +74,68 @@ public class TilesManager : MonoBehaviour
         return AddNewTile(x, y);
     }
 
-    public void UpdateTileWithNeighbors(int x, int y)
+    public void UpdateTileAndNeighbors(int x, int y)
     {
-        var tile = GetTile(x, y);
-        var leftNeighbor = GetTile(x - 1, y);
-        var rightNeighbor = GetTile(x + 1, y);
-        var topNeighbor = GetTile(x, y + 1);
-        var downNeighbor = GetTile(x, y - 1);
-        if (leftNeighbor != null)
+        // All combinations except 0,0
+        for (int i = -1; i <= 1; i++)
         {
-            leftNeighbor.UpdateState();
+            for (int j = -1; j <= 1; j++)
+            {
+                if (i == 0 && j == 0) { continue; }
+
+                var neighbor = GetOrAddNewTile(x + i, y + j);
+
+                if (neighbor != null && !neighbor.IsDiggedOut)
+                {
+                    neighbor.UpdateState();
+                }
+            }
         }
-        if(rightNeighbor != null)
-        {
-            rightNeighbor.UpdateState();
-        }
-        if (topNeighbor != null)
-        {
-            topNeighbor.UpdateState();
-        }
-        if (downNeighbor != null)
-        {
-            downNeighbor.UpdateState();
-        }
-        tile.UpdateState();
+
+        GetTile(x, y).UpdateState();
     }
 
-    private MiningControllerBase AddNewTile(int originalX, int originalY)
+    private MiningControllerBase AddNewTile(int originX, int originY)
     {
-        var tileGameObject = Instantiate(tilePrefab, new Vector3(originalX, originalY, 0), 
+        Debug.Log($"Adding tile at [{originX},{originY}]");
+
+        var tileGameObject = Instantiate(tilePrefab, new Vector3(originX, originY, 0), 
             Quaternion.identity, rootObject.transform);
-        tileGameObject.SetActive(false);
+        tileGameObject.SetActive(true);
+
         try
         {
             var miningController = tileGameObject.GetComponent<MiningControllerBase>();
-            tiles.Add((originalX, originalY), miningController);
-            miningController.Init(this, (originalX, originalY));
+            tiles.Add((originX, originY), miningController);
+            miningController.Init(this, (originX, originY));
             return miningController;
         }
         catch (ArgumentException)
         {
-            Debug.LogWarning($"Trying to add already added tile object to TilesManager with coordinates {originalX} {originalY}");
+            Debug.LogWarning($"Trying to add already added tile object to TilesManager with coordinates {originX} {originY}");
             return null;
+        }
+    }
+
+    /// <summary>
+    /// Forces creation of tile on x,y. Tile is not initialized.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    public void ForceTile(int x, int y)
+    {
+        if (tiles.ContainsKey((x, y)))
+        {
+            return;
+        }
+        else
+        {
+            var tileGameObject = Instantiate(tilePrefab, new Vector3(x, y, 0),
+            Quaternion.identity, rootObject.transform);
+            tileGameObject.SetActive(true);
+
+            var miningController = tileGameObject.GetComponent<MiningControllerBase>();
+            tiles.Add((x, y), miningController);
         }
     }
 }

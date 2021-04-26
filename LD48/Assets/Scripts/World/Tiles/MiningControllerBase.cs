@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class MiningControllerBase : MonoBehaviour
 {
     public abstract bool IsDiggedOut { get; set; }
+    //public abstract bool IsVisible { get; set; }
 
     public abstract void Init(TilesManager tilesManager, (int x, int y) coordinates);
 
