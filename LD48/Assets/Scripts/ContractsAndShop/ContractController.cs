@@ -21,7 +21,6 @@ public class ContractController : MonoBehaviour
 {
     public GameObject ShopParentOverlay;
     public Vector3 playerStartPosition;
-    public Transform player;
 
     [Header("Contract")]
     public GameObject rewardPrefab;
@@ -52,10 +51,6 @@ public class ContractController : MonoBehaviour
 
     private void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.E))
-        //{
-        //    SetShopWindowVisibility(true);
-        //}
         SubstractDeltaFromContractTime();
     }
 
@@ -151,8 +146,6 @@ public class ContractController : MonoBehaviour
             if(currentContractSecondsLeft < 0)
             {
                 //TODO: Add sound effect
-                //TODO: move also camera
-                player.position = playerStartPosition;
             }
         }
     }

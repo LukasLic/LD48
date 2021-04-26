@@ -15,7 +15,7 @@ public class InvetoryController : GenericSingleton<InvetoryController>
 {
     public Link_GemType_PrettyValueUiController[] collectedGems;
 
-    public int currentCoins;
+    //public int currentCoins;
 
     public override void Awake()
     {
@@ -73,19 +73,29 @@ public class InvetoryController : GenericSingleton<InvetoryController>
         }
     }
 
-    public bool HasEnoughCoins(int coins)
+    public bool HasEnoughGems(GemType gemType, int amount)
     {
-        return coins <= currentCoins;
+        return GetValue(gemType) >= amount;
     }
 
-    public void PayCoins(int amountToPay)
-    {
-        var originalCurrentCoins = currentCoins;
-        currentCoins -= amountToPay;
-        if(currentCoins < 0)
-        {
-            Debug.LogError("Player tries to pay with not sufficient amount of coins");
-            currentCoins = originalCurrentCoins;
-        }
-    }
+    //public bool HasEnoughCoins(int coins)
+    //{
+    //    return coins <= currentCoins;
+    //}
+
+    //public void PayCoins(int amountToPay)
+    //{
+    //    var originalCurrentCoins = currentCoins;
+    //    currentCoins -= amountToPay;
+    //    if(currentCoins < 0)
+    //    {
+    //        Debug.LogError("Player tries to pay with not sufficient amount of coins");
+    //        currentCoins = originalCurrentCoins;
+    //    }
+    //}
+
+    //public void ReceiveCoins(int coins)
+    //{
+    //    currentCoins += coins;
+    //}
 }

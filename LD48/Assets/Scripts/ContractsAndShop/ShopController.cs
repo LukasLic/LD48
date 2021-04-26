@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class ShopController : MonoBehaviour
 {
-    public int numberOfTeleports;
-    public int pickaxeLevel;
-    public int jetpackFuelLevel;
-
-    public int maxNumberOfTeleports;
-    public int maxPickaxeLevel;
-    public int maxJetpackFuelLevel;
-
-    public int teleportPrice;
-    public int pickaxeLevelPrice;
-    public int jetpackFuelLevelPrice;
-
     public GameObject player;
+
+    [Header("Teleport")]
+    public int numberOfTeleports;
+    public int maxNumberOfTeleports;
+    public int teleportPrice;
+
+    [Header("Pickaxe")]
+    public int pickaxeLevel;
+    public int maxPickaxeLevel;
+    public int pickaxeLevelPrice;
+
+    [Header("Jetpack")]
+    public int jetpackFuelLevel;
+    public int maxJetpackFuelLevel;
+    public int jetpackFuelLevelPrice;
 
     // Update is called once per frame
     public void Update()
@@ -38,11 +41,10 @@ public class ShopController : MonoBehaviour
 
     public void BuyTeleport()
     {
-        if (InvetoryController.Instance.HasEnoughCoins(teleportPrice) 
+        if (InvetoryController.Instance.HasEnoughGems(GemType.Coin, teleportPrice)
             && numberOfTeleports < maxNumberOfTeleports)
         {
-            Debug.Log("Can buy teleport");
-            InvetoryController.Instance.PayCoins(teleportPrice);
+            InvetoryController.Instance.Pay(GemType.Coin, teleportPrice);
             numberOfTeleports++;
             var teleportController = player.GetComponent<TeleportController>();
             if (teleportController == null)
@@ -52,15 +54,18 @@ public class ShopController : MonoBehaviour
             }
             teleportController.numberOfAvailableTeleports += 1;
         }
+        else
+        {
+            Debug.Log("Cannot buy teleport. Not enough money or max level reached");
+        }
     }
 
     public void BuyPickaxeLevel()
     {
-        if (InvetoryController.Instance.HasEnoughCoins(pickaxeLevelPrice)
+        if (InvetoryController.Instance.HasEnoughGems(GemType.Coin, pickaxeLevelPrice)
             && pickaxeLevel < maxPickaxeLevel)
         {
-            Debug.Log("Can buy pickaxe");
-            InvetoryController.Instance.PayCoins(pickaxeLevelPrice);
+            InvetoryController.Instance.Pay(GemType.Coin, pickaxeLevelPrice);
             pickaxeLevel++;
             //increase pickaxe level
             var diggingController = player.GetComponent<DiggingController>();
@@ -72,15 +77,18 @@ public class ShopController : MonoBehaviour
             diggingController.digs += 1;
             diggingController.criticalPointDigs += 2;
         }
+        else
+        {
+            Debug.Log("Cannot buy pickaxe level. Not enough money or max level reached");
+        }
     }
 
     public void BuyJetpackFuel()
     {
-        if (InvetoryController.Instance.HasEnoughCoins(jetpackFuelLevelPrice)
+        if (InvetoryController.Instance.HasEnoughGems(GemType.Coin, jetpackFuelLevelPrice)
             && jetpackFuelLevel < maxJetpackFuelLevel)
         {
-            Debug.Log("Can buy fuel");
-            InvetoryController.Instance.PayCoins(jetpackFuelLevelPrice);
+            InvetoryController.Instance.Pay(GemType.Coin, jetpackFuelLevelPrice);
             jetpackFuelLevel++;
             var movementController = player.GetComponent<PlayerMovement>();
             if (movementController == null)
@@ -89,7 +97,11 @@ public class ShopController : MonoBehaviour
                 return;
             }
 
-            movementController.maxJetpackFuel *= 2; 
+            movementController.maxJetpackFuel *= 2;
+        }
+        else
+        {
+            Debug.Log("Cannot buy jetpack fuel. Not enough money or max level reached");
         }
     }
 }

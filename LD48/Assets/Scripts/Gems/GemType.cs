@@ -7,4 +7,5 @@ public enum GemType
     Emerald,
     Sapphire,
     Crystal,
+    Coin
 }
