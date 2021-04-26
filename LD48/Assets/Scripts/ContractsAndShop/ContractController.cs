@@ -52,10 +52,10 @@ public class ContractController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            SetShopWindowVisibility(true);
-        }
+        //if(Input.GetKeyDown(KeyCode.E))
+        //{
+        //    SetShopWindowVisibility(true);
+        //}
         SubstractDeltaFromContractTime();
     }
 
