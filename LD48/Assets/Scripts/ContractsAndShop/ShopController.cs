@@ -17,9 +17,9 @@ public class ShopController : MonoBehaviour
     public int pickaxeLevelPrice;
 
     [Header("Jetpack")]
-    public int jetpackFuelLevel;
-    public int maxJetpackFuelLevel;
-    public int jetpackFuelLevelPrice;
+    public int jetpackPowerLevel;
+    public int maxJetpackPowerLevel;
+    public int jetpackFuelPowerPrice;
 
     // Update is called once per frame
     public void Update()
@@ -74,8 +74,8 @@ public class ShopController : MonoBehaviour
                 Debug.LogWarning("Digging controller in shop is null");
                 return;
             }
-            diggingController.digs += 1;
-            diggingController.criticalPointDigs += 2;
+            diggingController.digs += (pickaxeLevel + 1) + 1;
+            diggingController.criticalPointDigs = (pickaxeLevel + 1) + 2;
         }
         else
         {
@@ -85,11 +85,11 @@ public class ShopController : MonoBehaviour
 
     public void BuyJetpackFuel()
     {
-        if (InvetoryController.Instance.HasEnoughGems(GemType.Coin, jetpackFuelLevelPrice)
-            && jetpackFuelLevel < maxJetpackFuelLevel)
+        if (InvetoryController.Instance.HasEnoughGems(GemType.Coin, jetpackFuelPowerPrice)
+            && jetpackPowerLevel < maxJetpackPowerLevel)
         {
-            InvetoryController.Instance.Pay(GemType.Coin, jetpackFuelLevelPrice);
-            jetpackFuelLevel++;
+            InvetoryController.Instance.Pay(GemType.Coin, jetpackFuelPowerPrice);
+            jetpackPowerLevel++;
             var movementController = player.GetComponent<PlayerMovement>();
             if (movementController == null)
             {
@@ -97,7 +97,7 @@ public class ShopController : MonoBehaviour
                 return;
             }
 
-            movementController.maxJetpackFuel *= 2;
+            movementController.maxJetpackVelocity = (jetpackPowerLevel + 1) * 5;
         }
         else
         {
